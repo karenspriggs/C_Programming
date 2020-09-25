@@ -40,7 +40,6 @@ void choose_floor(){
 }
 
 void ride_elevator(){
-    floornumber;
     int floors[floornumber];
     
     for (int i = 0; i < floornumber; i++){
@@ -52,6 +51,8 @@ void ride_elevator(){
     for (int i = 0; i < chosenfloor; i++){
         printf("%i\n", floors[i]);
     }
+
+    chosenfloor = 0;
 }
 
 void exit_elevator(){
