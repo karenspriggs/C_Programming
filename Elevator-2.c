@@ -45,7 +45,9 @@ void choose_floor(){
 
 void ride_elevator(){
     // Change this to heap allocated
-    int floors[floornumber];
+    //int floors[floornumber];
+    int *floors;
+    floors = (int *) malloc(floornumber);
         
     for (int i = 0; i < floornumber; i++){
         floors[i] = i+1;

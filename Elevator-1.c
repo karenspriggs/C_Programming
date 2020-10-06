@@ -45,7 +45,7 @@ void choose_floor(){
 
 void ride_elevator(){
     int floors[floornumber];
-        
+    
     for (int i = 0; i < floornumber; i++){
         floors[i] = i+1;
     }
