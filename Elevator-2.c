@@ -6,7 +6,9 @@ int chosenfloor;
 
 void import_floors(){
     int x;
-    char buf[3];
+    //char buf[3];
+    char *buf;
+    buf = (char *)malloc(3);
 
     printf("%s", "Please input your desired amount of floors\n");
     scanf("%s", buf);
@@ -21,11 +23,15 @@ void import_floors(){
         floornumber = x;   
         printf("\nThis building now has %i floors\n", x);
     }
+
+    free(buf);
 }
 
 void choose_floor(){
     int x = 0;
-    char tuf[3];
+    //char tuf[3];
+    char *tuf;
+    tuf = (char *)malloc(3);
         
     printf("%s", "Which floor would you like to go to?\n");
         
@@ -41,6 +47,8 @@ void choose_floor(){
     } else {
         chosenfloor = x;
     }
+
+    free(tuf);
 }
 
 void ride_elevator(){
@@ -59,6 +67,7 @@ void ride_elevator(){
         printf("%i\n", floors[i]);
     }
 
+    free(floors);
     chosenfloor = 0;
 }
 
