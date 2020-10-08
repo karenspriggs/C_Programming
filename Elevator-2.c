@@ -24,7 +24,7 @@ void import_floors(){
         printf("\nThis building now has %i floors\n", x);
     }
 
-    free(buf);
+    //free(buf);
 }
 
 void choose_floor(){
@@ -48,7 +48,7 @@ void choose_floor(){
         chosenfloor = x;
     }
 
-    free(tuf);
+    //free(tuf);
 }
 
 void ride_elevator(){
@@ -68,7 +68,7 @@ void ride_elevator(){
         printf("%i\n", floors[i]);
     }
 
-    free(floors);
+    //free(floors);
     chosenfloor = 0;
 }
 
