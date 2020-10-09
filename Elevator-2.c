@@ -8,7 +8,8 @@ void import_floors(){
     int x;
     //char buf[3];
     char *buf;
-    buf = (char *)malloc(3);
+    int memory_size = 3 * sizeof(char);
+    buf = (char *)malloc(memory_size);
 
     printf("%s", "Please input your desired amount of floors\n");
     scanf("%s", buf);
@@ -31,7 +32,8 @@ void choose_floor(){
     int x = 0;
     //char tuf[3];
     char *tuf;
-    tuf = (char *)malloc(3);
+    int memory_size = 3 * sizeof(char);
+    tuf = (char *)malloc(memory_size);
         
     printf("%s", "Which floor would you like to go to?\n");
         
@@ -54,7 +56,7 @@ void choose_floor(){
 void ride_elevator(){
     // Change this to heap allocated
     //int floors[floornumber];
-    int memory_size = floornumber * 4;
+    int memory_size = floornumber * sizeof(int);
     int *floors;
     floors = (int *) malloc(memory_size);
         
@@ -76,7 +78,10 @@ void exit_elevator(){
     printf("\nWould you like to exit? Enter 0 for yes and anything else for no\n");
         
     int x;
-    char buf[3];
+    //char buf[3];
+    char *buf;
+    int memory_size = 3 * sizeof(char);
+    buf = (char *)malloc(memory_size);
 
     scanf("%s", buf);
         
