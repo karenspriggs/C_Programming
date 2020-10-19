@@ -4,9 +4,21 @@
 int floornumber;
 int chosenfloor;
 
+// Node struct
+struct node{
+    int key;
+    struct node *next;
+};
+
+struct node *first = NULL;
+struct node *current = NULL;
+
+void PrintList(){
+
+}
+
 void import_floors(){
     int x;
-    //char buf[3];
     char *buf;
     int memory_size = 3 * sizeof(char);
     buf = (char *)malloc(memory_size);
@@ -24,13 +36,10 @@ void import_floors(){
         floornumber = x;   
         printf("\nThis building now has %i floors\n", x);
     }
-
-    //free(buf);
 }
 
 void choose_floor(){
     int x = 0;
-    //char tuf[3];
     char *tuf;
     int memory_size = 3 * sizeof(char);
     tuf = (char *)malloc(memory_size);
@@ -49,13 +58,9 @@ void choose_floor(){
     } else {
         chosenfloor = x;
     }
-
-    //free(tuf);
 }
 
 void ride_elevator(){
-    // Change this to heap allocated
-    //int floors[floornumber];
     int memory_size = floornumber * sizeof(int);
     int *floors;
     floors = (int *) malloc(memory_size);
@@ -64,13 +69,16 @@ void ride_elevator(){
         floors[i] = i+1;
     }
         
-    printf("%s", "\nYou pass by the following floors:\n");
+    PrintList();
+
+    /** printf("%s", "\nYou pass by the following floors:\n");
         
     for (int i = 0; i < chosenfloor; i++){
         printf("%i\n", floors[i]);
     }
 
-    //free(floors);
+    **/
+
     chosenfloor = 0;
 }
 
@@ -78,7 +86,6 @@ void exit_elevator(){
     printf("\nWould you like to exit? Enter 0 for yes and anything else for no\n");
         
     int x;
-    //char buf[3];
     char *buf;
     int memory_size = 3 * sizeof(char);
     buf = (char *)malloc(memory_size);
