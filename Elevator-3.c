@@ -6,15 +6,36 @@ int chosenfloor;
 
 // Node struct
 struct node{
-    int key;
+    int data;
     struct node *next;
 };
 
-struct node *first = NULL;
+struct node *head = NULL;
 struct node *current = NULL;
 
-void PrintList(){
+void print_list(){
+    // Function to print the list, will be used in ride_elevator
+    struct node *ptr = head;
+    printf("\n");
 
+    while (ptr != NULL){
+        printf("%d", ptr->data);
+        ptr = ptr->next;
+    }
+}
+
+void insert_value(int input){
+    // Function to add all of the values to the list to be printed
+    struct node *new = (struct node*) malloc(sizeof(struct node));
+
+    new->data = input;
+    new->next = head;
+
+    head = new;
+}
+
+void clear_list(){
+    // Function to clear the list for when the user rides the elevator again
 }
 
 void import_floors(){
@@ -61,23 +82,17 @@ void choose_floor(){
 }
 
 void ride_elevator(){
-    int memory_size = floornumber * sizeof(int);
-    int *floors;
-    floors = (int *) malloc(memory_size);
-        
-    for (int i = 0; i < floornumber; i++){
-        floors[i] = i+1;
+    int currentfloor = 0;
+    int count = chosenfloor;
+
+    while (count > 0){
+        insert_value(currentfloor);
+        currentfloor++;
+        count--;
     }
         
-    PrintList();
-
-    /** printf("%s", "\nYou pass by the following floors:\n");
-        
-    for (int i = 0; i < chosenfloor; i++){
-        printf("%i\n", floors[i]);
-    }
-
-    **/
+    print_list();
+    clear_list();
 
     chosenfloor = 0;
 }
