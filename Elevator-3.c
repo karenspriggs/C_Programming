@@ -4,7 +4,8 @@
 int floornumber;
 int chosenfloor;
 
-// Node struct
+// Node struct for the linked list
+// I only need it to store a number for the floor it represents which is going in "data"
 struct node{
     int data;
     struct node *next;
@@ -27,6 +28,8 @@ void print_list(){
 
 void insert_value(int input){
     // Function to add all of the values to the list to be printed
+    // Used similarly to how the values of the array were printed but instead we have to add them to the list
+    // before printing
     struct node *new = (struct node*) malloc(sizeof(struct node));
 
     new->data = input;
@@ -37,6 +40,15 @@ void insert_value(int input){
 
 void clear_list(){
     // Function to clear the list for when the user rides the elevator again
+    // Otherwise it will just print the same list we had for the first ride even if they put in a different number
+    struct node *ptr = head;
+
+    while (ptr != NULL){
+        head = head->next;
+        // Freeing up the memory previously allocated for that node
+        free(ptr);
+        ptr = head;
+    }
 }
 
 void import_floors(){
@@ -91,6 +103,8 @@ void ride_elevator(){
         currentfloor--;
         count++;
     }
+
+    count = 0;
     
     printf("%s", "\nYou pass by the following floors:\n");
     print_list();
