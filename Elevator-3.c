@@ -20,6 +20,7 @@ void print_list(){
 
     while (ptr != NULL){
         printf("%d", ptr->data);
+        printf("%s", "\n");
         ptr = ptr->next;
     }
 }
@@ -82,15 +83,16 @@ void choose_floor(){
 }
 
 void ride_elevator(){
-    int currentfloor = 0;
-    int count = chosenfloor;
+    int currentfloor = chosenfloor;
+    int count = 0;
 
-    while (count > 0){
+    while (count < chosenfloor){
         insert_value(currentfloor);
-        currentfloor++;
-        count--;
+        currentfloor--;
+        count++;
     }
-        
+    
+    printf("%s", "\nYou pass by the following floors:\n");
     print_list();
     clear_list();
 
