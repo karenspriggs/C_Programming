@@ -119,8 +119,12 @@ void print_board(int** board){
 int main(){
     set_size();
 
+    printf("%s", "help\n");
+
     int size = boardsize;
-    int board[size][size];
+    int memory_size = size * sizeof(int);
+    int **board;
+    board = (int **) malloc(memory_size);
 
     make_board(board);
     //place_all();
