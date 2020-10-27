@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-int boardsize;
+int boardsize = 0;
 
 void set_size(){
     int x;
@@ -32,12 +32,49 @@ void make_board(int board[boardsize][boardsize]){
     }
 }
 
-void place_ship(int length){
+int generate_place(){
+    int max = boardsize - 1;
+    int place = rand() % max;
+    return place;
+}
+
+bool generate_alignment(){
+    bool is_vertical = false;
+    int alignment = rand() % 1;
+    
+    // If it's 0 then the ship will be placed vertically
+    if (alignment == 0){
+        is_vertical = true;
+    }
+
+    return is_vertical;
+}
+
+void place_ship_vertical(int length){
 
 }
 
-void place_all(){
+void place_ship_horizontal(int length){
 
+}
+
+void place_ship(int length){
+    int place = generate_place();
+    bool is_vertical = generate_alignment();
+
+    if (is_vertical){
+        place_ship_vertical(length);
+    } else {
+        place_ship_horizontal(length);
+    }
+}
+
+void place_all(){
+    place_ship(5);
+    place_ship(4);
+    place_ship(3);
+    place_ship(2);
+    place_ship(1);
 }
 
 void print_board(int board[boardsize][boardsize]){
