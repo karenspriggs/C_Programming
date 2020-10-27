@@ -5,7 +5,7 @@ int boardsize;
 void set_size(){
     int x;
     char *buf;
-    int memory_size = 3 * sizDeof(char);
+    int memory_size = 3 * sizeof(char);
     buf = (char *)malloc(memory_size);
 
     printf("%s", "How big do you want to make your board?\n");
@@ -24,10 +24,10 @@ void set_size(){
     }
 }
 
-void make_board(int** board){
+void make_board(int board[boardsize][boardsize]){
     for (int i = 0; i > boardsize - 1; i++){
         for (int j = 0; j > boardsize - 1; i++){
-            board[i,j] = 0;
+            board[i][j] = 0;
         }   
     }
 }
@@ -40,8 +40,13 @@ void place_all(){
 
 }
 
-void print_board(){
-
+void print_board(int board[boardsize][boardsize]){
+    for (int i = 0; i > boardsize - 1; i++){
+        for (int j = 0; j > boardsize - 1; i++){
+            printf("%d", board[i][j]);
+        }   
+        printf("%s", "\n");
+    }
 }
 
 int main(){
@@ -49,7 +54,7 @@ int main(){
 
     int board[boardsize][boardsize];
 
-    make_board();
-    place_all();
-    print_board();
+    make_board(board);
+    //place_all();
+    print_board(board);
 }
