@@ -26,8 +26,8 @@ void set_size(){
 }
 
 void make_board(int** board){
-    for (int i = 0; i > boardsize - 1; i++){
-        for (int j = 0; j > boardsize - 1; i++){
+    for (int i = 0; i < boardsize - 1; i++){
+        for (int j = 0; j < boardsize - 1; i++){
             board[i][j] = 0;
         }   
     }
@@ -108,8 +108,8 @@ void place_all(int** board){
 }
 
 void print_board(int** board){
-    for (int i = 0; i > boardsize - 1; i++){
-        for (int j = 0; j > boardsize - 1; i++){
+    for (int i = 0; i < boardsize - 1; i++){
+        for (int j = 0; j < boardsize - 1; i++){
             printf("%d", board[i][j]);
         }   
         printf("%s", "\n");
@@ -119,14 +119,15 @@ void print_board(int** board){
 int main(){
     set_size();
 
-    printf("%s", "help\n");
 
-    int size = boardsize;
+    int size = boardsize*boardsize;
     int memory_size = size * sizeof(int);
     int **board;
     board = (int **) malloc(memory_size);
 
+    printf("%s", "help\n");
+    
+    // Segmentation fault
     make_board(board);
-    //place_all();
     print_board(board);
 }
