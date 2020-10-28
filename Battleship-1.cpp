@@ -26,9 +26,9 @@ void set_size(){
     }
 }
 
-void make_board(int* board){
+void make_board(int * board){
     for (int i = 0; i < boardsize; i++){
-        for (int j = 0; j < boardsize; i++){
+        for (int j = 0; j < boardsize; j++){
             // Referenced from Karl Statz's fill function at 
             // https://gist.github.com/kstatz12/1675e6823134f0c4437734148a9dcce3
             *(board + i * boardsize + j) = 0;
@@ -110,13 +110,13 @@ void place_all(int* board){
     place_ship(1, board);
 }
 
-void print_board(int* board){
-    for (int i = 0; i < boardsize - 1; i++){
-        for (int j = 0; j < boardsize - 1; i++){
+void print_board(int * board){
+    for (int i = 0; i < boardsize; i++){
+        for (int j = 0; j < boardsize; j++){
             int current = *(board + i * boardsize + j) = 0;
             printf("%d", current);
+            printf("%s", "   ");
         }   
-
         printf("%s", "\n");
     }
 }
@@ -127,11 +127,8 @@ int main(){
     int memory_size = size * sizeof(int);
     int *board;
     board = (int *) malloc(memory_size);
-
-    printf("%s", "help\n");
     
     // Segmentation fault
     make_board(board);
-    printf("%s", "help\n");
     print_board(board);
 }
