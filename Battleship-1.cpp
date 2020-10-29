@@ -85,6 +85,7 @@ void place_ship_horizontal(int length, int* board){
             int current = start+i;
             board[current] = 1;
         }
+        printf("%s", "done");
     } else {
         place_ship_horizontal(length, board);
     }
@@ -116,6 +117,7 @@ void place_ship_vertical(int length, int* board){
             
             board[current] = 1;
         }
+        printf("%s", "done");
     } else {
         place_ship_vertical(length, board);
     }
@@ -171,7 +173,6 @@ int main(){
     make_board(board);
 
     place_ship(5, board);
-    //place_all(board);
 
     print_board(board);
 }
