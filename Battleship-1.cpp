@@ -53,12 +53,78 @@ bool generate_alignment(){
     return is_vertical;
 }
 
-bool place_check(int pos, int* board){
-    bool is_free = true;
-
+bool up(int x, int y, int* board){
+    bool is_free;
+    int location = boardsize * y + x;
+    
     for (int i = 1; i < 4; i++){
-        if ((board[pos+i] == 1)){
-            is_free = false;
+        bool is_free = (board[location - i * boardsize] != 1);
+    }
+
+    return is_free;
+}
+
+bool down(int x, int y, int* board){
+    bool is_free;
+    int location = boardsize * y + x;
+    
+    for (int i = 1; i < 4; i++){
+        bool is_free = (board[location + i * boardsize] != 1);
+    }
+
+    return is_free;
+}
+
+bool check_up(int x, int y, int* board){
+    bool is_free;
+    
+    // this is terrible im so sorry
+    if (y == 0){
+        return true;
+    } else {
+        if (y == 1){
+            return (board[x] != 1);
+        } else {
+            if (y == 2){
+                return ((board[x] != 1) && (board[x*boardsize] != 1));
+            } else {
+                is_free = up(x, y, board);
+                return is_free;
+            }
+        }
+    }
+}
+
+bool check_down(int x, int y, int* board){
+    bool is_free;
+    int second_last = (boardsize - 1) * y + x;
+    int third_last = (boardsize - 2) * y + x;
+
+    // this is terrible im so sorry
+    if (y == 9){
+        return true;
+    } else {
+        if (y == 8){
+            return (board[second_last] != 1);
+        } else {
+            if (y == 7){
+                return ((board[second_last] != 1) && (board[third_last] != 1));
+            } else {
+                is_free = up(x, y, board);
+                return is_free;
+            }
+        }
+    }
+}
+
+bool place_check(int x, int y, int length, int align, int* board){
+    bool is_free = true;
+    int pos = (((boardsize - 1)* y) + x);
+
+    // vertical placement
+    if (align == 0){
+        for (int i = 0; i < length; i++){
+
         }
     }
 
