@@ -65,34 +65,52 @@ bool place_check(int pos, int* board){
     return is_free;
 }
 
+void make_ship_horizontal(int length, int x, int y, int* board){
+    for (int i = 0; i < length; i++){
+            int row = boardsize*y;
+            int start = row + x;
+            int current = start+i;
+            board[current] = 1;
+    }
+}
+
 void place_ship_horizontal(int length, int* board){
     int place_x = generate_place();
     int place_y = generate_place();
     bool valid;
 
-    if (((boardsize - place_y) <= length-1) || ((boardsize - place_x) <= length-1)){
+    if (((boardsize - place_x) < length)){
+        printf("%d", (boardsize - place_x));
+        printf("%s", "\ntoo high\n");
+        printf("%d", place_x);
+        printf("%s", "\n");
+        valid = false;
         place_ship_horizontal(length, board);
+    } else {
+        make_ship_horizontal(length, place_x, place_y, board);
     }
 
+    /**
     for (int i = 0; i < length; i++){
         valid = place_check(place_x+i, board);
     }
 
     if (valid){
-        for (int i = 0; i < length; i++){
-            int row = boardsize*place_y;
-            int start = row + place_x;
-            int current = start+i;
-            board[current] = 1;
-        }
-        printf("%s", "done");
+        make_ship_horizontal(length, place_x, place_y, board);
     } else {
         place_ship_horizontal(length, board);
     }
+    **/
+}
 
-    printf("%d", place_x);
-    printf("%d", place_y);
-    printf("%s", "\n");
+void make_ship_vertical(int length, int x, int y, int* board){
+    for (int i = 0; i < length; i++){
+            int column = x;
+            int start = y+i;
+            int place = start*boardsize;
+            int current = place+x;
+            board[current] = 1;
+    }
 }
 
 void place_ship_vertical(int length, int* board){
@@ -100,31 +118,28 @@ void place_ship_vertical(int length, int* board){
     int place_y = generate_place();
     bool valid;
 
-    if (((boardsize - place_y) <= length-1) || ((boardsize - place_x) <= length-1)) {
+    if (((boardsize - place_y) < length)) {
+        printf("%d", (boardsize - place_y));
+        printf("%s", "\ntoo high\n");
+        printf("%d", place_y);
+        printf("%s", "\n");
+        valid = false;
         place_ship_vertical(length, board);
+    } else {
+        make_ship_vertical(length, place_x, place_y, board);
     }
 
+    /**
     for (int i = 0; i < length; i++){
         valid = place_check(place_y+i, board);
     }
 
     if (valid){
-        for (int i = 0; i < length; i++){
-            int column = place_x;
-            int start = place_y+i;
-            int place = start*boardsize;
-            int current = place+place_x;
-            
-            board[current] = 1;
-        }
-        printf("%s", "done");
+        make_ship_vertical(length, place_x, place_y, board);
     } else {
         place_ship_vertical(length, board);
     }
-
-    printf("%d", place_x);
-    printf("%d", place_y);
-    printf("%s", "\n");
+    **/
 }
 
 void place_ship(int length, int* board){
