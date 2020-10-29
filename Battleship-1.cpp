@@ -37,24 +37,13 @@ void make_board(int * board){
 }
 
 int generate_place(){
-    int max = boardsize - 1;
-    int place = rand() % max;
+    int place = rand() % boardsize;
     return place;
-}
-
-void make_ship(int* board){
-    int place = generate_place();
-
-    board[0] = 1;
-    board[1] = 1;
-    board[2] = 1;
-    board[3] = 1;
-    board[4] = 1;
 }
 
 bool generate_alignment(){
     bool is_vertical = false;
-    int alignment = rand() % 1;
+    int alignment = rand() % 2;
     
     // If it's 0 then the ship will be placed vertically
     if (alignment == 0){
@@ -64,11 +53,11 @@ bool generate_alignment(){
     return is_vertical;
 }
 
-bool place_check(int pos, int* line){
+bool place_check(int pos, int* board){
     bool is_free = true;
 
     for (int i = 1; i < 4; i++){
-        if ((line[pos+i] == 1)){
+        if ((board[pos+i] == 1)){
             is_free = false;
         }
     }
@@ -76,39 +65,69 @@ bool place_check(int pos, int* line){
     return is_free;
 }
 
-void place_ship_horizontal(int length, int* row){
+void place_ship_horizontal(int length, int* board){
+    printf("%s", "horizontal\n");
     int place_x = generate_place();
-    int place_y = generate_place();
+    //int place_y = generate_place();
     bool valid;
 
-    if (((boardsize - place_x) < length) || ((boardsize - place_y) < length)){
+    // || ((boardsize - place_y) < length))
+    if ((boardsize - place_x) < length){
         place_x = generate_place();
-        place_y = generate_place();
+        //place_y = generate_place();
     }
 
     for (int i = 0; i < length; i++){
-        valid = place_check(place_x+i, row);
+        valid = place_check(place_x+i, board);
     }
 
     if (valid){
-
+        printf("%d", place_x);
+        printf("%s", "\n");
+        for (int i = 0; i < length; i++){
+            int current = place_x+i;
+            board[current] = 1;
+        }
     } else {
-        place_ship_horizontal(length, row);
+        place_ship_horizontal(length, board);
     }
 }
 
-void place_ship_vertical(int length){
-    int place = generate_place();
+void place_ship_vertical(int length, int* board){
+    printf("%s", "vertical\n");
 
+    int place_y = generate_place();
+    bool valid;
+
+    if ((boardsize - place_y) < length){
+        place_y = generate_place();
+        //place_y = generate_place();
+    }
+
+    for (int i = 0; i < length; i++){
+        valid = place_check(place_y+i, board);
+    }
+
+    if (valid){
+        printf("%d", place_y);
+        printf("%s", "\n");
+        for (int i = 0; i < length; i++){
+            int current = place_y+i;
+            int place = current*boardsize;
+            board[place] = 1;
+        }
+    } else {
+        place_ship_vertical(length, board);
+    }
 }
 
 void place_ship(int length, int* board){
     bool is_vertical = generate_alignment();
 
     if (is_vertical){
-        place_ship_vertical(length);
+        place_ship_vertical(length, board);
     } else {
-        //place_ship_horizontal(length, board);
+        place_ship_horizontal(length, board);
     }
 }
 
@@ -140,6 +159,6 @@ int main(){
     
     // Segmentation fault
     make_board(board);
-    make_ship(board);
+    place_ship(5, board);
     print_board(board);
 }
