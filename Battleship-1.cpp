@@ -66,12 +66,12 @@ bool place_check(int pos, int* board){
 }
 
 void place_ship_horizontal(int length, int* board){
-    printf("%s", "horizontal\n");
     int place_x = generate_place();
+    int place_y = generate_place();
     bool valid;
 
-    if ((boardsize - place_x) < length){
-        place_x = generate_place();
+    if (((boardsize - place_y) <= length-1) || ((boardsize - place_x) <= length-1)){
+        place_ship_horizontal(length, board);
     }
 
     for (int i = 0; i < length; i++){
@@ -79,26 +79,28 @@ void place_ship_horizontal(int length, int* board){
     }
 
     if (valid){
-        printf("%d", place_x);
-        printf("%s", "\n");
         for (int i = 0; i < length; i++){
-            int current = place_x+i;
+            int row = boardsize*place_y;
+            int start = row + place_x;
+            int current = start+i;
             board[current] = 1;
         }
     } else {
         place_ship_horizontal(length, board);
     }
+
+    printf("%d", place_x);
+    printf("%d", place_y);
+    printf("%s", "\n");
 }
 
 void place_ship_vertical(int length, int* board){
-    printf("%s", "vertical\n");
-
+    int place_x = generate_place();
     int place_y = generate_place();
     bool valid;
 
-    if ((boardsize - place_y) < length){
-        place_y = generate_place();
-        //place_y = generate_place();
+    if (((boardsize - place_y) <= length-1) || ((boardsize - place_x) <= length-1)) {
+        place_ship_vertical(length, board);
     }
 
     for (int i = 0; i < length; i++){
@@ -106,16 +108,21 @@ void place_ship_vertical(int length, int* board){
     }
 
     if (valid){
-        printf("%d", place_y);
-        printf("%s", "\n");
         for (int i = 0; i < length; i++){
-            int current = place_y+i;
-            int place = current*boardsize;
-            board[place] = 1;
+            int column = place_x;
+            int start = place_y+i;
+            int place = start*boardsize;
+            int current = place+place_x;
+            
+            board[current] = 1;
         }
     } else {
         place_ship_vertical(length, board);
     }
+
+    printf("%d", place_x);
+    printf("%d", place_y);
+    printf("%s", "\n");
 }
 
 void place_ship(int length, int* board){
@@ -130,10 +137,15 @@ void place_ship(int length, int* board){
 
 void place_all(int* board){
     place_ship(5, board);
+    printf("%s", "made ship 5\n");
     place_ship(4, board);
+    printf("%s", "made ship 4\n");
     place_ship(3, board);
+    printf("%s", "made ship 3\n");
     place_ship(2, board);
+    printf("%s", "made ship 2\n");
     place_ship(1, board);
+    printf("%s", "made ship 1\n");
 }
 
 void print_board(int * board){
@@ -155,9 +167,11 @@ int main(){
     int memory_size = size * sizeof(int);
     int *board;
     board = (int *) malloc(memory_size);
-    
-    // Segmentation fault
+
     make_board(board);
+
     place_ship(5, board);
+    //place_all(board);
+
     print_board(board);
 }
