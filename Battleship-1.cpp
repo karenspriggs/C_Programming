@@ -42,6 +42,16 @@ int generate_place(){
     return place;
 }
 
+void make_ship(int* board){
+    int place = generate_place();
+
+    board[0] = 1;
+    board[1] = 1;
+    board[2] = 1;
+    board[3] = 1;
+    board[4] = 1;
+}
+
 bool generate_alignment(){
     bool is_vertical = false;
     int alignment = rand() % 1;
@@ -113,7 +123,7 @@ void place_all(int* board){
 void print_board(int * board){
     for (int i = 0; i < boardsize; i++){
         for (int j = 0; j < boardsize; j++){
-            int current = *(board + i * boardsize + j) = 0;
+            int current = *(board + i * boardsize + j);
             printf("%d", current);
             printf("%s", "   ");
         }   
@@ -130,5 +140,6 @@ int main(){
     
     // Segmentation fault
     make_board(board);
+    make_ship(board);
     print_board(board);
 }
