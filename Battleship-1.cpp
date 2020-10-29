@@ -80,10 +80,12 @@ void place_ship_horizontal(int length, int* board){
     bool valid;
 
     if (((boardsize - place_x) < length)){
+        /**
         printf("%d", (boardsize - place_x));
         printf("%s", "\ntoo high\n");
         printf("%d", place_x);
         printf("%s", "\n");
+        **/
         valid = false;
         place_ship_horizontal(length, board);
     } else {
@@ -119,10 +121,12 @@ void place_ship_vertical(int length, int* board){
     bool valid;
 
     if (((boardsize - place_y) < length)) {
+        /**
         printf("%d", (boardsize - place_y));
         printf("%s", "\ntoo high\n");
         printf("%d", place_y);
         printf("%s", "\n");
+        **/
         valid = false;
         place_ship_vertical(length, board);
     } else {
@@ -142,13 +146,25 @@ void place_ship_vertical(int length, int* board){
     **/
 }
 
+void place_one(int * board){
+    int place_x = generate_place();
+    int place_y = generate_place();
+    bool valid;
+
+    board[place_x*place_y] = 1;
+}
+
 void place_ship(int length, int* board){
     bool is_vertical = generate_alignment();
 
-    if (is_vertical){
-        place_ship_vertical(length, board);
-    } else {
-        place_ship_horizontal(length, board);
+    if (length == 1){
+        place_one(board);
+    } else{
+        if (is_vertical){
+            place_ship_vertical(length, board);
+        } else {
+            place_ship_horizontal(length, board);
+        }
     }
 }
 
@@ -187,7 +203,7 @@ int main(){
 
     make_board(board);
 
-    place_ship(5, board);
-
+    //place_ship(5, board);
+    place_all(board);
     print_board(board);
 }
