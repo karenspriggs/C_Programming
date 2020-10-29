@@ -68,13 +68,10 @@ bool place_check(int pos, int* board){
 void place_ship_horizontal(int length, int* board){
     printf("%s", "horizontal\n");
     int place_x = generate_place();
-    //int place_y = generate_place();
     bool valid;
 
-    // || ((boardsize - place_y) < length))
     if ((boardsize - place_x) < length){
         place_x = generate_place();
-        //place_y = generate_place();
     }
 
     for (int i = 0; i < length; i++){
@@ -152,6 +149,8 @@ void print_board(int * board){
 
 int main(){
     set_size();
+    srand(time(0));
+    
     int size = boardsize*boardsize;
     int memory_size = size * sizeof(int);
     int *board;
