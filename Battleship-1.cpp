@@ -56,9 +56,9 @@ bool generate_alignment(){
 bool up(int x, int y, int * board){
     bool is_free;
     int location = boardsize * y + x;
-    
+
     for (int i = 1; i < 4; i++){
-        is_free = (board[location - i * boardsize] != 1);
+        is_free = (board[location - (i * boardsize)] != 1);
     }
 
     return is_free;
@@ -69,7 +69,7 @@ bool down(int x, int y, int * board){
     int location = boardsize * y + x;
     
     for (int i = 1; i < 4; i++){
-        is_free = (board[location + i * boardsize] != 1);
+        is_free = (board[location + (i * boardsize)] != 1);
     }
 
     return is_free;
@@ -77,7 +77,7 @@ bool down(int x, int y, int * board){
 
 bool left(int x, int y, int * board){
     bool is_free;
-    int pos = (boardsize * y) + x; 
+    int pos = boardsize * y + x; 
     
     for (int i = 1; i < 4; i++){
         is_free = (board[pos-i] != 1);
@@ -88,7 +88,7 @@ bool left(int x, int y, int * board){
 
 bool right(int x, int y, int * board){
     bool is_free;
-    int pos = (boardsize * y) + x; 
+    int pos = boardsize * y + x; 
     
     for (int i = 1; i < 4; i++){
         is_free = (board[pos+i] != 1);
@@ -133,7 +133,6 @@ bool check_down(int x, int y, int * board){
                 return ((board[second_last] != 1) && (board[third_last] != 1));
             } else {
                 is_free = down(x, y, board);
-
                 return is_free;
             }
         }
@@ -182,6 +181,14 @@ bool check_right(int x, int y, int * board){
     }
 }
 
+void print_result(bool input){
+    if (input){
+        printf("%s", "This test was passed\n");
+    } else {
+        printf("%s", "This test was not\n");
+    }
+}
+
 bool place_check(int x, int y, int length, int align, int * board){
     bool is_free = true;
     int pos = boardsize * y + x;
@@ -189,23 +196,35 @@ bool place_check(int x, int y, int length, int align, int * board){
     // vertical placement
     if (align == 0){
         for (int i = 0; i < length; i++){
+            bool space_free = (board[((boardsize * y+i) + x - 1)] != 1);
             bool down_free = check_down(x, y+i, board);
+            print_result(down_free);
             bool up_free = check_up(x, y+i, board);
+            print_result(up_free);
             bool left_free = check_left(x, y+i, board);
+            print_result(left_free);
             bool right_free = check_right(x, y+i, board);
-            is_free = (down_free && up_free && left_free && right_free);
+            print_result(right_free);
+            is_free = (space_free && down_free && up_free && left_free && right_free);
+            print_result(is_free);
+            return is_free;
         }
     } else {
         for (int i = 0; i < length; i++){
+            bool space_free = (board[((boardsize * y) + x + i - 1)] != 1);
             bool down_free = check_down(x+i, y, board);
+            print_result(down_free);
             bool up_free = check_up(x+i, y, board);
+            print_result(up_free);
             bool left_free = check_left(x+i, y, board);
+            print_result(left_free);
             bool right_free = check_right(x+i, y, board);
-            is_free = (down_free && up_free && left_free && right_free);
+            print_result(right_free);
+            is_free = (space_free && down_free && up_free && left_free && right_free);
+            print_result(is_free);
+            return is_free;
         }   
     }
-
-    printf("%d", pos);
 
     return is_free;
 }
@@ -222,13 +241,12 @@ void make_ship_horizontal(int length, int x, int y, int * board){
 void place_ship_horizontal(int length, int * board){
     int place_x = generate_place();
     int place_y = generate_place();
-    bool valid;
     printf("%d", place_x);
     printf("%d", place_y);
     printf("%s", "\n");
+    bool valid = place_check(place_x, place_y, length, 1, board);
 
-    if ((((boardsize - place_x) < length)) || (!place_check(place_x, place_y, length, 1, board))){
-        //valid = false; 
+    if ((!valid) || (((boardsize - place_x) < length))){
         place_ship_horizontal(length, board);
     } else {
         make_ship_horizontal(length, place_x, place_y, board);
@@ -251,10 +269,9 @@ void place_ship_vertical(int length, int * board){
     printf("%d", place_x);
     printf("%d", place_y);
     printf("%s", "\n");
-    bool valid;
+    bool valid = place_check(place_x, place_y, length, 0, board);
 
-    if ((((boardsize - place_y) < length)) || (!place_check(place_x, place_y, length, 0, board))){
-        //valid = false;
+    if ((!valid) || (((boardsize - place_y) < length))){
         place_ship_vertical(length, board);
     } else {
         make_ship_vertical(length, place_x, place_y, board);
@@ -264,7 +281,11 @@ void place_ship_vertical(int length, int * board){
 void place_one(int * board){
     int place_x = generate_place();
     int place_y = generate_place();
-    board[place_x*place_y] = 1;
+    board[place_x+place_y*boardsize] = 1;
+
+    printf("%d", place_x);
+    printf("%d", place_y);
+    printf("%s", "\n");
 }
 
 void place_ship(int length, int * board){
