@@ -63,6 +63,9 @@ bool up(int x, int y, int * board){
 
     for (int i = 1; i < 4; i++){
         is_free = (board[location - (i * boardsize)] != 1);
+        if (!is_free){
+            return false;
+        }
     }
 
     return is_free;
@@ -75,6 +78,9 @@ bool down(int x, int y, int * board){
     
     for (int i = 1; i < 4; i++){    
         is_free = (board[location + (i * boardsize)] != 0);
+        if (!is_free){
+            return false;
+        }
     }
 
     return is_free;
@@ -87,6 +93,9 @@ bool left(int x, int y, int * board){
     
     for (int i = 1; i < 4; i++){
         is_free = (board[pos-i] != 1);
+        if (!is_free){
+            return false;
+        }
     }
 
     return is_free;
@@ -99,6 +108,9 @@ bool right(int x, int y, int * board){
     
     for (int i = 1; i < 4; i++){
         is_free = (board[pos+i] != 1);
+        if (!is_free){
+            return false;
+        }
     }
 
     return is_free;
@@ -248,7 +260,9 @@ bool place_check(int x, int y, int length, int align, int * board){
             printf("%d", 5);
 
             is_free = (space_free && down_free && up_free && left_free && right_free);
-
+            if (!is_free){
+                return false;
+            }
         }
         return is_free;
     // Horizontal placement check
@@ -272,8 +286,9 @@ bool place_check(int x, int y, int length, int align, int * board){
             printf("%d", 5);
 
             is_free = (space_free && down_free && up_free && left_free && right_free);
-
-
+            if (!is_free){
+                return false;
+            }
         }
         return is_free;   
     }
