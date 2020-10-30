@@ -53,29 +53,51 @@ bool generate_alignment(){
     return is_vertical;
 }
 
-bool up(int x, int y, int* board){
+bool up(int x, int y, int * board){
     bool is_free;
     int location = boardsize * y + x;
     
     for (int i = 1; i < 4; i++){
-        bool is_free = (board[location - i * boardsize] != 1);
+        is_free = (board[location - i * boardsize] != 1);
     }
 
     return is_free;
 }
 
-bool down(int x, int y, int* board){
+bool down(int x, int y, int * board){
     bool is_free;
     int location = boardsize * y + x;
     
     for (int i = 1; i < 4; i++){
-        bool is_free = (board[location + i * boardsize] != 1);
+        is_free = (board[location + i * boardsize] != 1);
     }
 
     return is_free;
 }
 
-bool check_up(int x, int y, int* board){
+bool left(int x, int y, int * board){
+    bool is_free;
+    int pos = (boardsize * y) + x; 
+    
+    for (int i = 1; i < 4; i++){
+        is_free = (board[pos-i] != 1);
+    }
+
+    return is_free;
+}
+
+bool right(int x, int y, int * board){
+    bool is_free;
+    int pos = (boardsize * y) + x; 
+    
+    for (int i = 1; i < 4; i++){
+        is_free = (board[pos+i] != 1);
+    }
+
+    return is_free;
+}
+
+bool check_up(int x, int y, int * board){
     bool is_free;
     
     // this is terrible im so sorry
@@ -88,17 +110,18 @@ bool check_up(int x, int y, int* board){
             if (y == 2){
                 return ((board[x] != 1) && (board[x*boardsize] != 1));
             } else {
-                is_free = up(x, y, board);
+                //is_free = up(x, y, board);
+                is_free = true;
                 return is_free;
             }
         }
     }
 }
 
-bool check_down(int x, int y, int* board){
+bool check_down(int x, int y, int * board){
     bool is_free;
-    int second_last = (boardsize - 1) * y + x;
-    int third_last = (boardsize - 2) * y + x;
+    int second_last = (boardsize * (y + 1) + x);
+    int third_last = (boardsize * (y + 2) + x);
 
     // this is terrible im so sorry
     if (y == 9){
@@ -110,38 +133,17 @@ bool check_down(int x, int y, int* board){
             if (y == 7){
                 return ((board[second_last] != 1) && (board[third_last] != 1));
             } else {
-                is_free = up(x, y, board);
+                //is_free = up(x, y, board);
+                is_free = true;
                 return is_free;
             }
         }
     }
 }
 
-bool left(int x, int y, int* board){
+bool check_left(int x, int y, int * board){
     bool is_free;
-    int pos = (boardsize - 1) * y + x; 
-    
-    for (int i = 1; i < 4; i++){
-        bool is_free = (board[pos-i] != 1);
-    }
-
-    return is_free;
-}
-
-bool right(int x, int y, int* board){
-    bool is_free;
-    int pos = (boardsize - 1) * y + x; 
-    
-    for (int i = 1; i < 4; i++){
-        bool is_free = (board[pos+i] != 1);
-    }
-
-    return is_free;
-}
-
-bool check_left(int x, int y, int* board){
-    bool is_free;
-    int pos = (boardsize - 1) * y + x;
+    int pos = boardsize * y + x;
     
     // this is terrible im so sorry
     if (x == 0){
@@ -153,16 +155,17 @@ bool check_left(int x, int y, int* board){
             if (x == 2){
                 return ((board[pos-1] != 1) && (board[pos-2] != 1));
             } else {
-                is_free = left(x, y, board);
+                //is_free = left(x, y, board);
+                is_free = true;
                 return is_free;
             }
         }
     }
 }
 
-bool check_right(int x, int y, int* board){
+bool check_right(int x, int y, int * board){
     bool is_free;
-    int pos = (boardsize - 1) * y + x;
+    int pos = boardsize * y + x;
 
     // this is terrible im so sorry
     if (x == 9){
@@ -174,17 +177,18 @@ bool check_right(int x, int y, int* board){
             if (x == 7){
                 return ((board[pos+1] != 1) && (board[pos+2] != 1));
             } else {
-                is_free = right(x, y, board);
+                //is_free = right(x, y, board);
+                is_free = true;
                 return is_free;
             }
         }
     }
 }
 
-bool place_check(int x, int y, int length, int align, int* board){
+bool place_check(int x, int y, int length, int align, int * board){
     bool is_free = true;
-    int pos = (boardsize - 1) * y + x;
-
+    int pos = boardsize * y + x;
+    
     // vertical placement
     if (align == 0){
         for (int i = 0; i < length; i++){
@@ -203,50 +207,57 @@ bool place_check(int x, int y, int length, int align, int* board){
             is_free = (down_free && up_free && left_free && right_free);
         }   
     }
-    
+
     printf("%d", pos);
+
     return is_free;
 }
 
-void make_ship_horizontal(int length, int x, int y, int* board){
+void make_ship_horizontal(int length, int x, int y, int * board){
     for (int i = 0; i < length; i++){
-            int row = boardsize*y;
-            int start = row + x;
-            int current = start+i;
-            board[current] = 1;
+        int row = boardsize*y;
+        int start = row + x;
+        int current = start+i;
+        board[current] = 1;
     }
 }
 
-void place_ship_horizontal(int length, int* board){
+void place_ship_horizontal(int length, int * board){
     int place_x = generate_place();
     int place_y = generate_place();
     bool valid;
+    printf("%d", place_x);
+    printf("%d", place_y);
+    printf("%s", "\n");
 
-    if ((((boardsize - place_x) < length)) || (!place_check(place_x, place_y, length, 0, board))){
-        valid = false; 
+    if ((((boardsize - place_x) < length)) || (!place_check(place_x, place_y, length, 1, board))){
+        //valid = false; 
         place_ship_horizontal(length, board);
     } else {
         make_ship_horizontal(length, place_x, place_y, board);
     }
 }
 
-void make_ship_vertical(int length, int x, int y, int* board){
+void make_ship_vertical(int length, int x, int y, int * board){
     for (int i = 0; i < length; i++){
-            int column = x;
-            int start = y+i;
-            int place = start*boardsize;
-            int current = place+x;
-            board[current] = 1;
+        int column = x;
+        int start = y+i;
+        int place = start*boardsize;
+        int current = place+x;
+        board[current] = 1;
     }
 }
 
-void place_ship_vertical(int length, int* board){
+void place_ship_vertical(int length, int * board){
     int place_x = generate_place();
     int place_y = generate_place();
+    printf("%d", place_x);
+    printf("%d", place_y);
+    printf("%s", "\n");
     bool valid;
 
-    if ((((boardsize - place_y) < length)) || (!place_check(place_x, place_y, length, 0, board))) {
-        valid = false;
+    if ((((boardsize - place_y) < length)) || (!place_check(place_x, place_y, length, 0, board))){
+        //valid = false;
         place_ship_vertical(length, board);
     } else {
         make_ship_vertical(length, place_x, place_y, board);
@@ -258,10 +269,14 @@ void place_one(int * board){
     int place_y = generate_place();
     bool valid;
 
-    board[place_x*place_y] = 1;
+    if (board [place_x*place_y] != 1){
+        board[place_x*place_y] = 1;
+    } else {
+        place_one(board);
+    }
 }
 
-void place_ship(int length, int* board){
+void place_ship(int length, int * board){
     bool is_vertical = generate_alignment();
 
     if (length == 1){
@@ -275,17 +290,17 @@ void place_ship(int length, int* board){
     }
 }
 
-void place_all(int* board){
+void place_all(int * board){
     place_ship(5, board);
-    printf("%s", "made ship 5\n");
+    printf("%s", "\nmade ship 5\n");
     place_ship(4, board);
-    printf("%s", "made ship 4\n");
+    printf("%s", "\nmade ship 4\n");
     place_ship(3, board);
-    printf("%s", "made ship 3\n");
+    printf("%s", "\nmade ship 3\n");
     place_ship(2, board);
-    printf("%s", "made ship 2\n");
+    printf("%s", "\nmade ship 2\n");
     place_ship(1, board);
-    printf("%s", "made ship 1\n");
+    printf("%s", "\nmade ship 1\n");
 }
 
 void print_board(int * board){
@@ -309,9 +324,6 @@ int main(){
     board = (int *) malloc(memory_size);
 
     make_board(board);
-    place_ship(5, board);
-    place_ship(4, board);
-
-    //place_all(board);
+    place_all(board);
     print_board(board);
 }
