@@ -150,15 +150,15 @@ bool check_down(int x, int y, int * board){
     int last = (boardsize * (y + 2) + x);
 
     // If y = 9, it is already at the bottom of the board
-    if (y == 9){
+    if (y == (boardsize-1)){
         return true;
     } else {
         // If y = 8, there is only one item to check below it
-        if (y == 8){
+        if (y == (boardsize-2)){
             return (board[second_last] != 1);
         } else {
             // If y = 7, there are only two items to check below it
-            if (y == 7){
+            if (y == (boardsize-2)){
                 return ((board[second_last] != 1) && (board[last] != 1));
             } else {
                 // Here you run the thing that only goes three times
@@ -202,15 +202,15 @@ bool check_right(int x, int y, int * board){
     int pos = boardsize * y + x;
 
     // If x = 9 then it is already all the way to the right
-    if (x == 9){
+    if (x == (boardsize-1)){
         return true;
     } else {
         // If x = 8 then there is only one item to check on the right
-        if (x == 8){
+        if (x == (boardsize-2)){
             return (board[pos+1] != 1);
         } else {
             // If x = 7 then there are only two items to check on the right
-            if (x == 7){
+            if (x == (boardsize-3)){
                 return ((board[pos+1] != 1) && (board[pos+2] != 1));
             } else {
                 // Here you run the thing that only goes three times
@@ -418,8 +418,8 @@ int main(){
     // Making the board all 0s
     make_board(board);
     // Placing the ships on the board
-    place_ship(5, board);
-    //place_all(board);
+    //place_ship(5, board);
+    place_all(board);
     // Printing the completed board
     print_board(board);
 }
