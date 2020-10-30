@@ -77,7 +77,7 @@ bool down(int x, int y, int * board){
     int location = boardsize * y + x;
     
     for (int i = 1; i < 4; i++){    
-        is_free = (board[location + (i * boardsize)] != 0);
+        is_free = (board[location + (i * boardsize)] != 1);
         if (!is_free){
             return false;
         }
