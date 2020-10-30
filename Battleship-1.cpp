@@ -16,10 +16,10 @@ void set_size(){
     // Knowledge of the atoi function is from https://www.tutorialspoint.com/how-do-i-convert-a-char-to-an-int-in-c-and-cplusplus
     x = atoi(buf);
 
-    // The numbers 6 and 16 are arbitrary, but I assume putting a limit on the board sizing is best
-    // I also know that there is probably a minimum board size for the assignment to work but I don't know how small that is
-    if ((x < 6) || (x > 16)){
-        printf("%s", "Please input a number between 6 and 16\n");
+    // If the board is smaller than 12 it seems like its more likely for the placements of the ship to become problematic
+    // I set the limit at 16 because if it was too big it would be a bit ridiculous 
+    if ((x < 12) || (x > 16)){
+        printf("%s", "Please input a number between 12 and 16\n");
         set_size();
     } else {
         boardsize = x;
@@ -245,21 +245,12 @@ bool place_check(int x, int y, int length, int align, int * board){
         // Since it is vertical, we add i to the y value since we are going "down a space"
         for (int i = 0; i < length; i++){
             space_free = (board[((boardsize * y+i) + x - 1)] != 1);
-            printf("%d", 1);
-
             down_free = check_down(x, y+i, board);
-            printf("%d", 2);
-
             up_free = check_up(x, y+i, board);
-            printf("%d", 3);
-
             left_free = check_left(x, y+i, board);
-            printf("%d", 4);
-
             right_free = check_right(x, y+i, board);
-            printf("%d", 5);
-
             is_free = (space_free && down_free && up_free && left_free && right_free);
+
             if (!is_free){
                 return false;
             }
@@ -271,21 +262,12 @@ bool place_check(int x, int y, int length, int align, int * board){
         // Since it is horizontal, we add i to the x value since we are going "right a space"
         for (int i = 0; i < length; i++){
             space_free = (board[((boardsize * y) + x + i - 1)] != 1);
-            printf("%d", 1);
-
             down_free = check_down(x+i, y, board);
-            printf("%d", 2);
-            
             up_free = check_up(x+i, y, board);
-            printf("%d", 3);
-
             left_free = check_left(x+i, y, board);
-            printf("%d", 4);
-
             right_free = check_right(x+i, y, board);
-            printf("%d", 5);
-
             is_free = (space_free && down_free && up_free && left_free && right_free);
+
             if (!is_free){
                 return false;
             }
@@ -316,14 +298,6 @@ void place_ship_horizontal(int length, int * board){
 
     bool valid = place_check(place_z, place_y, length, 1, board);
 
-    // For testing
-    //printf("%d", place_x);
-    //printf("%s", "\n");
-    printf("%d", place_y);
-    printf("%s", "\n");
-    printf("%d", place_z);
-    printf("%s", "\n");
-
     // Checking to make sure what was just generated isn't something out of bounds
     if ((((boardsize - place_z) < length) || (!valid))){
         place_ship_horizontal(length, board);
@@ -352,14 +326,6 @@ void place_ship_vertical(int length, int * board){
     int place_z = generate_place();
 
     bool valid = place_check(place_z, place_y, length, 0, board);
-
-    // For testing
-    //printf("%d", place_x);
-    //printf("%s", "\n");
-    printf("%d", place_y);
-    printf("%s", "\n");
-    printf("%d", place_z);
-    printf("%s", "\n");
 
     // Checking to make sure what was just generated isn't something out of bounds
     if ((((boardsize - place_y) < length) || (!valid))){
@@ -418,7 +384,6 @@ int main(){
     // Making the board all 0s
     make_board(board);
     // Placing the ships on the board
-    //place_ship(5, board);
     place_all(board);
     // Printing the completed board
     print_board(board);
