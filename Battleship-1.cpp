@@ -192,7 +192,6 @@ bool place_check(int x, int y, int length, int align, int* board){
             bool up_free = check_up(x, y+i, board);
             bool left_free = check_left(x, y+i, board);
             bool right_free = check_right(x, y+i, board);
-            printf("%d", pos);
             is_free = (down_free && up_free && left_free && right_free);
         }
     } else {
@@ -201,11 +200,11 @@ bool place_check(int x, int y, int length, int align, int* board){
             bool up_free = check_up(x+i, y, board);
             bool left_free = check_left(x+i, y, board);
             bool right_free = check_right(x+i, y, board);
-            printf("%d", pos);
             is_free = (down_free && up_free && left_free && right_free);
         }   
     }
-
+    
+    printf("%d", pos);
     return is_free;
 }
 
