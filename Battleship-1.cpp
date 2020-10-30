@@ -75,6 +75,17 @@ bool down(int x, int y, int* board){
     return is_free;
 }
 
+bool vert_check(int dir, int x, int y, int* board){
+    bool is_free;
+    int location = boardsize * y + x;
+    
+    for (int i = 1; i < 4; i++){
+        bool is_free = (board[location + dir * (i * boardsize)] != 1);
+    }
+
+    return is_free;
+}
+
 bool check_up(int x, int y, int* board){
     bool is_free;
     
@@ -117,12 +128,81 @@ bool check_down(int x, int y, int* board){
     }
 }
 
+bool left(int x, int y, int* board){
+    bool is_free;
+    int pos = (boardsize - 1) * y + x; 
+    
+    for (int i = 1; i < 4; i++){
+        bool is_free = (board[pos-i] != 1);
+    }
+
+    return is_free;
+}
+
+bool right(int x, int y, int* board){
+    bool is_free;
+    int pos = (boardsize - 1) * y + x; 
+    
+    for (int i = 1; i < 4; i++){
+        bool is_free = (board[pos+i] != 1);
+    }
+
+    return is_free;
+}
+
+bool check_left(int x, int y, int* board){
+    bool is_free;
+    int pos = (boardsize - 1) * y + x;
+    
+    // this is terrible im so sorry
+    if (x == 0){
+        return true;
+    } else {
+        if (x == 1){
+            return (board[pos-1] != 1);
+        } else {
+            if (x == 2){
+                return ((board[pos-1] != 1) && (board[pos-2] != 1));
+            } else {
+                is_free = left(x, y, board);
+                return is_free;
+            }
+        }
+    }
+}
+
+bool check_right(int x, int y, int* board){
+    bool is_free;
+    int pos = (boardsize - 1) * y + x;
+
+    // this is terrible im so sorry
+    if (x == 9){
+        return true;
+    } else {
+        if (x == 8){
+            return (board[pos+1] != 1);
+        } else {
+            if (x == 7){
+                return ((board[pos+1] != 1) && (board[pos+2] != 1));
+            } else {
+                is_free = right(x, y, board);
+                return is_free;
+            }
+        }
+    }
+}
+
 bool place_check(int x, int y, int length, int align, int* board){
     bool is_free = true;
-    int pos = (((boardsize - 1)* y) + x);
+    //int initial = (((boardsize - 1)* y) + x);
 
     // vertical placement
     if (align == 0){
+        for (int i = 0; i < length; i++){
+            is_free = check_down(x, y, board);
+            is_free = check_up(x, y, board);
+        }
+    } else {
         for (int i = 0; i < length; i++){
 
         }
@@ -146,12 +226,6 @@ void place_ship_horizontal(int length, int* board){
     bool valid;
 
     if (((boardsize - place_x) < length)){
-        /**
-        printf("%d", (boardsize - place_x));
-        printf("%s", "\ntoo high\n");
-        printf("%d", place_x);
-        printf("%s", "\n");
-        **/
         valid = false;
         place_ship_horizontal(length, board);
     } else {
@@ -187,12 +261,6 @@ void place_ship_vertical(int length, int* board){
     bool valid;
 
     if (((boardsize - place_y) < length)) {
-        /**
-        printf("%d", (boardsize - place_y));
-        printf("%s", "\ntoo high\n");
-        printf("%d", place_y);
-        printf("%s", "\n");
-        **/
         valid = false;
         place_ship_vertical(length, board);
     } else {
@@ -268,8 +336,6 @@ int main(){
     board = (int *) malloc(memory_size);
 
     make_board(board);
-
-    //place_ship(5, board);
     place_all(board);
     print_board(board);
 }
