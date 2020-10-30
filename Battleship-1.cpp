@@ -58,7 +58,7 @@ bool generate_alignment(){
 
 // Checking 3 spaces up for a given point for there to be a 1
 bool up(int x, int y, int * board){
-    bool is_free;
+    bool is_free = true;
     int location = boardsize * y + x;
 
     for (int i = 1; i < 4; i++){
@@ -73,7 +73,7 @@ bool up(int x, int y, int * board){
 
 // Checking 3 spaces down for a given point for there to be a 1
 bool down(int x, int y, int * board){
-    bool is_free;
+    bool is_free = true;
     int location = boardsize * y + x;
     
     for (int i = 1; i < 4; i++){    
@@ -88,7 +88,7 @@ bool down(int x, int y, int * board){
 
 // Checking 3 spaces left for a given point for there to be a 1
 bool left(int x, int y, int * board){
-    bool is_free;
+    bool is_free = true;
     int pos = boardsize * y + x; 
     
     for (int i = 1; i < 4; i++){
@@ -103,7 +103,7 @@ bool left(int x, int y, int * board){
 
 // Checking 3 spaces right for a given point for there to be a 1
 bool right(int x, int y, int * board){
-    bool is_free;
+    bool is_free = true;
     int pos = boardsize * y + x; 
     
     for (int i = 1; i < 4; i++){
@@ -118,7 +118,7 @@ bool right(int x, int y, int * board){
 
 // Checks to what will determine that place's validity based on whats above it
 bool check_up(int x, int y, int * board){
-    bool is_free;
+    bool is_free = true;
     
     // if y is 0, it is starting all the way at the top 
     if (y == 0){
@@ -143,7 +143,7 @@ bool check_up(int x, int y, int * board){
 
 // Checks to see what will determine the validity of this spot based off of whats below it
 bool check_down(int x, int y, int * board){
-    bool is_free;
+    bool is_free = true;
     // These represent the second to last
     int second_last = (boardsize * (y + 1) + x);
     // And last rows of the board
@@ -171,7 +171,7 @@ bool check_down(int x, int y, int * board){
 
 //Checks to see what will determine the validity of this spot based off of whats to the left of it
 bool check_left(int x, int y, int * board){
-    bool is_free;
+    bool is_free = true;
     // The current randomly generated position to start on
     int pos = boardsize * y + x;
     
@@ -197,7 +197,7 @@ bool check_left(int x, int y, int * board){
 
 //Checks to see what will determine the validity of this spot based off of whats to the right of it
 bool check_right(int x, int y, int * board){
-    bool is_free;
+    bool is_free = true;
     // The current randomly generated position to start on
     int pos = boardsize * y + x;
 
@@ -315,7 +315,7 @@ void place_ship_horizontal(int length, int * board){
     int place_x = generate_place();
     int place_y = generate_place();
     bool valid = place_check(place_x, place_y, length, 1, board);
-    
+
     // For testing
     printf("%d", place_x);
     printf("%s", "\n");
