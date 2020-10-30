@@ -63,9 +63,6 @@ bool up(int x, int y, int * board){
 
     for (int i = 1; i < 4; i++){
         is_free = (board[location - (i * boardsize)] != 1);
-        if (!is_free){
-            return false;
-        }
     }
 
     return is_free;
@@ -78,9 +75,6 @@ bool down(int x, int y, int * board){
     
     for (int i = 1; i < 4; i++){    
         is_free = (board[location + (i * boardsize)] != 0);
-        if (!is_free){
-            return false;
-        }
     }
 
     return is_free;
@@ -93,9 +87,6 @@ bool left(int x, int y, int * board){
     
     for (int i = 1; i < 4; i++){
         is_free = (board[pos-i] != 1);
-        if (!is_free){
-            return false;
-        }
     }
 
     return is_free;
@@ -108,9 +99,6 @@ bool right(int x, int y, int * board){
     
     for (int i = 1; i < 4; i++){
         is_free = (board[pos+i] != 1);
-        if (!is_free){
-            return false;
-        }
     }
 
     return is_free;
@@ -261,9 +249,6 @@ bool place_check(int x, int y, int length, int align, int * board){
 
             is_free = (space_free && down_free && up_free && left_free && right_free);
 
-            if (!is_free){
-                return false;
-            }
         }
         return is_free;
     // Horizontal placement check
@@ -288,9 +273,7 @@ bool place_check(int x, int y, int length, int align, int * board){
 
             is_free = (space_free && down_free && up_free && left_free && right_free);
 
-            if (!is_free){
-                return false;
-            }
+
         }
         return is_free;   
     }
@@ -314,20 +297,24 @@ void make_ship_horizontal(int length, int x, int y, int * board){
 void place_ship_horizontal(int length, int * board){
     int place_x = generate_place();
     int place_y = generate_place();
-    bool valid = place_check(place_x, place_y, length, 1, board);
+    int place_z = generate_place();
+
+    bool valid = place_check(place_z, place_y, length, 1, board);
 
     // For testing
-    printf("%d", place_x);
-    printf("%s", "\n");
-    //printf("%d", place_y);
+    //printf("%d", place_x);
     //printf("%s", "\n");
+    printf("%d", place_y);
+    printf("%s", "\n");
+    printf("%d", place_z);
+    printf("%s", "\n");
 
     // Checking to make sure what was just generated isn't something out of bounds
-    if ((((boardsize - place_x) < length) || (!valid))){
+    if ((((boardsize - place_z) < length) || (!valid))){
         place_ship_horizontal(length, board);
     } else {
         // If they do, make the ship
-        make_ship_horizontal(length, place_x, place_y, board);
+        make_ship_horizontal(length, place_z, place_y, board);
     }
 }
 
@@ -347,21 +334,24 @@ void make_ship_vertical(int length, int x, int y, int * board){
 void place_ship_vertical(int length, int * board){
     int place_x = generate_place();
     int place_y = generate_place();
-    bool valid = place_check(place_x, place_y, length, 0, board);
+    int place_z = generate_place();
+
+    bool valid = place_check(place_z, place_y, length, 0, board);
 
     // For testing
-    printf("%d", place_x);
-    printf("%s", "\n");
-    //printf("%d", place_y);
+    //printf("%d", place_x);
     //printf("%s", "\n");
+    printf("%d", place_y);
+    printf("%s", "\n");
+    printf("%d", place_z);
+    printf("%s", "\n");
 
     // Checking to make sure what was just generated isn't something out of bounds
     if ((((boardsize - place_y) < length) || (!valid))){
         place_ship_vertical(length, board);
-        place_y = 0;
     } else {
         // If they do, make the ship
-        make_ship_vertical(length, place_x, place_y, board);
+        make_ship_vertical(length, place_z, place_y, board);
     }
 }
 
