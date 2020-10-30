@@ -110,8 +110,7 @@ bool check_up(int x, int y, int * board){
             if (y == 2){
                 return ((board[x] != 1) && (board[x*boardsize] != 1));
             } else {
-                //is_free = up(x, y, board);
-                is_free = true;
+                is_free = up(x, y, board);
                 return is_free;
             }
         }
@@ -133,8 +132,8 @@ bool check_down(int x, int y, int * board){
             if (y == 7){
                 return ((board[second_last] != 1) && (board[third_last] != 1));
             } else {
-                //is_free = up(x, y, board);
-                is_free = true;
+                is_free = down(x, y, board);
+
                 return is_free;
             }
         }
@@ -155,8 +154,7 @@ bool check_left(int x, int y, int * board){
             if (x == 2){
                 return ((board[pos-1] != 1) && (board[pos-2] != 1));
             } else {
-                //is_free = left(x, y, board);
-                is_free = true;
+                is_free = left(x, y, board);
                 return is_free;
             }
         }
@@ -177,8 +175,7 @@ bool check_right(int x, int y, int * board){
             if (x == 7){
                 return ((board[pos+1] != 1) && (board[pos+2] != 1));
             } else {
-                //is_free = right(x, y, board);
-                is_free = true;
+                is_free = right(x, y, board);
                 return is_free;
             }
         }
@@ -267,13 +264,7 @@ void place_ship_vertical(int length, int * board){
 void place_one(int * board){
     int place_x = generate_place();
     int place_y = generate_place();
-    bool valid;
-
-    if (board [place_x*place_y] != 1){
-        board[place_x*place_y] = 1;
-    } else {
-        place_one(board);
-    }
+    board[place_x*place_y] = 1;
 }
 
 void place_ship(int length, int * board){
@@ -291,6 +282,8 @@ void place_ship(int length, int * board){
 }
 
 void place_all(int * board){
+    place_ship(1, board);
+    printf("%s", "\nmade ship 1\n");
     place_ship(5, board);
     printf("%s", "\nmade ship 5\n");
     place_ship(4, board);
@@ -299,8 +292,6 @@ void place_all(int * board){
     printf("%s", "\nmade ship 3\n");
     place_ship(2, board);
     printf("%s", "\nmade ship 2\n");
-    place_ship(1, board);
-    printf("%s", "\nmade ship 1\n");
 }
 
 void print_board(int * board){
