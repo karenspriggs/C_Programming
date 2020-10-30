@@ -75,17 +75,6 @@ bool down(int x, int y, int* board){
     return is_free;
 }
 
-bool vert_check(int dir, int x, int y, int* board){
-    bool is_free;
-    int location = boardsize * y + x;
-    
-    for (int i = 1; i < 4; i++){
-        bool is_free = (board[location + dir * (i * boardsize)] != 1);
-    }
-
-    return is_free;
-}
-
 bool check_up(int x, int y, int* board){
     bool is_free;
     
@@ -194,7 +183,7 @@ bool check_right(int x, int y, int* board){
 
 bool place_check(int x, int y, int length, int align, int* board){
     bool is_free = true;
-    //int initial = (((boardsize - 1)* y) + x);
+
     // vertical placement
     if (align == 0){
         for (int i = 0; i < length; i++){
@@ -320,6 +309,9 @@ int main(){
     board = (int *) malloc(memory_size);
 
     make_board(board);
-    place_all(board);
+    place_ship(5, board);
+    place_ship(4, board);
+
+    //place_all(board);
     print_board(board);
 }
