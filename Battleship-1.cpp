@@ -195,17 +195,25 @@ bool check_right(int x, int y, int* board){
 bool place_check(int x, int y, int length, int align, int* board){
     bool is_free = true;
     //int initial = (((boardsize - 1)* y) + x);
-
     // vertical placement
     if (align == 0){
         for (int i = 0; i < length; i++){
-            is_free = check_down(x, y, board);
-            is_free = check_up(x, y, board);
+            bool down_free = check_down(x, y+i, board);
+            bool up_free = check_up(x, y+i, board);
+            bool left_free = check_left(x, y+i, board);
+            bool right_free = check_right(x, y+i, board);
+
+            is_free = (down_free && up_free && left_free && right_free);
         }
     } else {
         for (int i = 0; i < length; i++){
+            bool down_free = check_down(x+i, y, board);
+            bool up_free = check_up(x+i, y, board);
+            bool left_free = check_left(x+i, y, board);
+            bool right_free = check_right(x+i, y, board);
 
-        }
+            is_free = (down_free && up_free && left_free && right_free);
+        }   
     }
 
     return is_free;
@@ -225,24 +233,12 @@ void place_ship_horizontal(int length, int* board){
     int place_y = generate_place();
     bool valid;
 
-    if (((boardsize - place_x) < length)){
-        valid = false;
+    if ((((boardsize - place_x) < length)) || (!place_check(place_x, place_y, length, 0, board))){
+        valid = false; 
         place_ship_horizontal(length, board);
     } else {
         make_ship_horizontal(length, place_x, place_y, board);
     }
-
-    /**
-    for (int i = 0; i < length; i++){
-        valid = place_check(place_x+i, board);
-    }
-
-    if (valid){
-        make_ship_horizontal(length, place_x, place_y, board);
-    } else {
-        place_ship_horizontal(length, board);
-    }
-    **/
 }
 
 void make_ship_vertical(int length, int x, int y, int* board){
@@ -260,24 +256,12 @@ void place_ship_vertical(int length, int* board){
     int place_y = generate_place();
     bool valid;
 
-    if (((boardsize - place_y) < length)) {
+    if ((((boardsize - place_y) < length)) || (!place_check(place_x, place_y, length, 0, board))) {
         valid = false;
         place_ship_vertical(length, board);
     } else {
         make_ship_vertical(length, place_x, place_y, board);
     }
-
-    /**
-    for (int i = 0; i < length; i++){
-        valid = place_check(place_y+i, board);
-    }
-
-    if (valid){
-        make_ship_vertical(length, place_x, place_y, board);
-    } else {
-        place_ship_vertical(length, board);
-    }
-    **/
 }
 
 void place_one(int * board){
