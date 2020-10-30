@@ -149,15 +149,15 @@ bool check_down(int x, int y, int * board){
     // And last rows of the board
     int last = (boardsize * (y + 2) + x);
 
-    // If y = 9, it is already at the bottom of the board
+    // If y = (boardsize-1), it is already at the bottom of the board
     if (y == (boardsize-1)){
         return true;
     } else {
-        // If y = 8, there is only one item to check below it
+        // If y = (boardsize-2), there is only one item to check below it
         if (y == (boardsize-2)){
             return (board[second_last] != 1);
         } else {
-            // If y = 7, there are only two items to check below it
+            // If y = (boardsize-3), there are only two items to check below it
             if (y == (boardsize-2)){
                 return ((board[second_last] != 1) && (board[last] != 1));
             } else {
@@ -201,15 +201,15 @@ bool check_right(int x, int y, int * board){
     // The current randomly generated position to start on
     int pos = boardsize * y + x;
 
-    // If x = 9 then it is already all the way to the right
+    // If x = (boardsize-1) then it is already all the way to the right
     if (x == (boardsize-1)){
         return true;
     } else {
-        // If x = 8 then there is only one item to check on the right
+        // If x = (boardsize-2) then there is only one item to check on the right
         if (x == (boardsize-2)){
             return (board[pos+1] != 1);
         } else {
-            // If x = 7 then there are only two items to check on the right
+            // If x = (boardsize-3) then there are only two items to check on the right
             if (x == (boardsize-3)){
                 return ((board[pos+1] != 1) && (board[pos+2] != 1));
             } else {
