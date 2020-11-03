@@ -369,6 +369,8 @@ void print_board(int * board){
     }
 }
 
+// Battleship 2 starts here
+
 // If it's a near miss or a hit we are gonna try to find the next one
 void find_next(int * board, int x, int y, int result, int * hit_board){
     int hitcount;
@@ -407,13 +409,14 @@ void make_move(int * board, int * hit_board){
 // Check function
 int check(int * board, int x, int y){
     int pos = (y * boardsize) + x;
+    bool adjacent = (board[pos+1] == 1) || (board[pos-1] == 1) || (board[pos - (boardsize)] == 1) || (board[pos + (boardsize)] == 1);
 
     if (board[pos] == 1){
         // 1 represents a hit
         return 1;
     } else {
         // Make sure to make this work with edges later
-        if ((board[pos+1] == 1) || (board[pos-1] == 1) || (board[pos - (boardsize)] == 1) || (board[pos + (boardsize)] == 1)){
+        if (adjacent){
             // 2 represents a near miss
             return 2;
         } else {
@@ -424,6 +427,7 @@ int check(int * board, int x, int y){
 }
 
 void update_adjacent(int * board, int pos, int value){
+    // This is mainly used for when something misses since the spots adjacent to it must also be empty
     // If the position is anywhere but on the far right, set the value to the right to 3
     if (!(pos % (boardsize - 1) == 0)){
         board[pos+1] = 3;
@@ -433,17 +437,25 @@ void update_adjacent(int * board, int pos, int value){
     if (!(pos % boardsize) == 0){
         board[pos-1] = 3;
     }
+
+    // If the position is anywhere but at the top, set the value on top to 3
+    if (!(pos - boardsize) < 0){
+        board[pos - boardsize] = 3;
+    }
+
+    // If the position is anywhere but at the bottom, set the value below to 3
+    if (!(pos + boardsize) > (boardsize*boardsize)){
+        board[pos + boardsize] = 3;
+    }
 }
 
 // Updating the board with the check numbers
 void update_board(int * board, int x, int y, int value){
     int pos = (y * boardsize) + x;
 
-    // Make sure this works for edge cases later
     // If its a miss then the ones adjacent to it are also empty
     if (value == 3){
-        board[pos + boardsize] = 3;
-        board[pos - boardsize] = 3;
+        update_adjacent(board, pos, value);
     } else {
         board[pos] = value;
     }
