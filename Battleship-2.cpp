@@ -408,7 +408,9 @@ void make_move(int * board, int * hit_board){
         printf("%s", "\n");
 
         update_board(hit_board, place_x, place_y, result);
-        if (result == 1 || result == 2){
+
+        // If the result was a hit then try to find another
+        if (result != 3){
             find_next(board, place_x, place_y, result, hit_board);
         }
     }
@@ -510,15 +512,15 @@ void update_adjacent(int * board, int pos, int value){
 // Updating the board with the check numbers
 void update_board(int * board, int x, int y, int value){
     int pos = (y * boardsize) + x;
+    board[pos] = value;
 
     // If its a miss then the ones adjacent to it are also empty
     if (value == 3){
         update_adjacent(board, pos, value);
-    } else {
-        board[pos] = value;
-    }
+    } 
 }
 
+// Starts the algorithm
 void start(int * board, int * hitboard){
     bool done = false;
 
