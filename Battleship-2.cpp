@@ -369,6 +369,50 @@ void print_board(int * board){
     }
 }
 
+void make_move(int * board, int * hit_board){
+    int place_x = generate_place();
+    int place_y = generate_place();
+
+    int result = check(board, place_x, place_y);
+    update_board(hit_board, place_x, place_y, result);
+}
+
+// Check function
+int check(int * board, int x, int y){
+    int pos = (y * boardsize) + x;
+
+    if (board[pos] == 1){
+        // 1 represents a hit
+        return 1;
+    } else {
+        // Make sure to make this work with edges later
+        if ((board[pos+1] == 1) || (board[pos-1] == 1) || (board[pos - (boardsize)] == 1) || (board[pos + (boardsize)] == 1)){
+            // 2 represents a near miss
+            return 2;
+        } else {
+            // 3 represents a miss
+            return 3;
+        }
+    }
+}
+
+// Updating the board with the check numbers
+void update_board(int * board, int x, int y, int value){
+    int pos = (y * boardsize) + x;
+
+    board[pos] = value;
+}
+
+void start(int * board, int * hitboard){
+    bool done = false;
+
+    while(!done){
+        make_move(board, hitboard);
+    }
+
+    print_board(hitboard);
+}
+
 int main(){
     // Setting the board size
     set_size();
@@ -381,10 +425,16 @@ int main(){
     int *board;
     board = (int *) malloc(memory_size);
 
+    int *board_hits;
+    board_hits = (int *) malloc(memory_size);
+
     // Making the board all 0s
     make_board(board);
     // Placing the ships on the board
     place_all(board);
     // Printing the completed board
     print_board(board);
+
+    // The algorithm
+    start(board, board_hits);
 }
