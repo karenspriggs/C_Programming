@@ -369,12 +369,39 @@ void print_board(int * board){
     }
 }
 
+// If it's a near miss or a hit we are gonna try to find the next one
+void find_next(int * board, int x, int y, int result, int * hit_board){
+    int hitcount;
+
+    // Keeping track of the amount of hits we have for this one ship
+    if (result == 1){
+        hitcount = 1;
+    } else {
+        hitcount = 0;
+    }
+}
+
 void make_move(int * board, int * hit_board){
     int place_x = generate_place();
     int place_y = generate_place();
+    int pos = (place_y*boardsize) + place_x;
 
-    int result = check(board, place_x, place_y);
-    update_board(hit_board, place_x, place_y, result);
+    // If the spot just generated is either a hit or miss, generate another
+    if (hit_board[pos] == 1 || hit_board[pos] == 3){
+        make_move(board, hit_board);
+    } else {
+        int result = check(board, place_x, place_y);
+
+        printf("%d", place_x);
+        printf("%s", "\n");
+        printf("%d", place_y);
+        printf("%s", "\n");
+
+        update_board(hit_board, place_x, place_y, result);
+        if (result == 1 || result == 2){
+            find_next(board, place_x, place_y, result, hit_board);
+        }
+    }
 }
 
 // Check function
@@ -396,11 +423,30 @@ int check(int * board, int x, int y){
     }
 }
 
+void update_adjacent(int * board, int pos, int value){
+    // If the position is anywhere but on the far right, set the value to the right to 3
+    if (!(pos % (boardsize - 1) == 0)){
+        board[pos+1] = 3;
+    }
+
+    // If the position is anywhere but on the far left, set the value to the left to 3
+    if (!(pos % boardsize) == 0){
+        board[pos-1] = 3;
+    }
+}
+
 // Updating the board with the check numbers
 void update_board(int * board, int x, int y, int value){
     int pos = (y * boardsize) + x;
 
-    board[pos] = value;
+    // Make sure this works for edge cases later
+    // If its a miss then the ones adjacent to it are also empty
+    if (value == 3){
+        board[pos + boardsize] = 3;
+        board[pos - boardsize] = 3;
+    } else {
+        board[pos] = value;
+    }
 }
 
 void start(int * board, int * hitboard){
