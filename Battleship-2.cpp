@@ -374,12 +374,20 @@ void print_board(int * board){
 // If it's a near miss or a hit we are gonna try to find the next one
 void find_next(int * board, int x, int y, int result, int * hit_board){
     int hitcount;
+    bool is_vertical = generate_alignment();
+    bool go_positive = generate_alignment();
 
     // Keeping track of the amount of hits we have for this one ship
     if (result == 1){
         hitcount = 1;
     } else {
         hitcount = 0;
+    }
+
+    if (is_vertical){
+
+    } else {
+
     }
 }
 
@@ -426,12 +434,62 @@ int check(int * board, int x, int y){
     }
 }
 
+// Checks to see if the position is right up against an edge or corner
+// This affects how the next position to be checked will be determined
+int error_codes(int * board, int pos, int value){
+   // Will say if anything violates this
+
+    // Returns 1 if it is in the top left corner
+    if (pos == 0){
+        return 1;
+    } 
+
+    // Returns 2 if it is in the top right corner
+    if ((pos % (boardsize-1) == 0) && (pos - boardsize) < 0){
+        return 2;
+    }
+
+    // Returns 3 if it is in the bottom right corner
+    if (pos == ((boardsize*boardsize) - 1)){
+        return 3;
+    }
+
+    // Returns 4 if it is in the bottom left corner
+    if (((pos + boardsize) > (boardsize*boardsize)) && (pos % boardsize == 0)){
+        return 4;
+    }
+
+    // Returns 5 if it is on the far right
+    if (pos % (boardsize - 1) == 0){
+        return 5;
+    }
+
+    // Returns 6 if it is on the far left
+    if ((pos % boardsize) == 0){
+        return 6;
+    }
+
+    // Returns 7 if it is on the top
+    if ((pos - boardsize) < 0){
+        return 7;
+    } 
+
+    // Returns 8 if it is on the bottom
+    if ((pos + boardsize) > (boardsize*boardsize)){
+        return 8;
+    } 
+
+    // Return 0 if nothing is wrong
+    return 0;
+}
+
+
 void update_adjacent(int * board, int pos, int value){
     // This is mainly used for when something misses since the spots adjacent to it must also be empty
     // If the position is anywhere but on the far right, set the value to the right to 3
     if (!(pos % (boardsize - 1) == 0)){
         board[pos+1] = 3;
-    }
+    } 
 
     // If the position is anywhere but on the far left, set the value to the left to 3
     if (!(pos % boardsize) == 0){
@@ -441,12 +499,12 @@ void update_adjacent(int * board, int pos, int value){
     // If the position is anywhere but at the top, set the value on top to 3
     if (!(pos - boardsize) < 0){
         board[pos - boardsize] = 3;
-    }
+    } 
 
     // If the position is anywhere but at the bottom, set the value below to 3
     if (!(pos + boardsize) > (boardsize*boardsize)){
         board[pos + boardsize] = 3;
-    }
+    } 
 }
 
 // Updating the board with the check numbers
