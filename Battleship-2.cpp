@@ -448,27 +448,42 @@ void br_corner_check(int * board, int * hit_board){
 
 // Topmost row
 void topmost_check(int * board, int pos, int * hit_board){
-
+    // This would check the spaces to the left, right, and below
+    // And then continue in the direction that the hit was found
+    // If a hit was found in two directions, it would start going left first
+    // Until it missed, then it would go right
 }
 
 // Bottommost row
 void bottommost_check(int * board, int pos, int * hit_board){
-
+    // This would check the spaces to the left, right, and above
+    // And then continue in the direction that the hit was found
+    // If a hit was found in two directions, it would start going left first
+    // Until it missed, then it would go right
 }
 
 // Far left column
 void leftmost_check(int * board, int pos, int * hit_board){
-
+    // This would check the spaces to the right, above, and below
+    // And then continue in the direction that the hit was found
+    // If a hit was found in two directions, it would start going up first
+    // Until it missed, then it would go down
 }
 
 // Far right column
 void rightmost_check(int * board, int pos, int * hit_board){
-
+    // This would check the spaces to the left, above, and below
+    // And then continue in the direction that the hit was found
+    // If a hit was found in two directions, it would start going up first
+    // Until it missed, then it would go down
 }
 
 // None of the above (default)
 void normal_check(int * board, int pos, int * hit_board){
-
+    // This would check the spaces in all adjacent directions
+    // And then continue in the direction that the hit was found
+    // If the hit was found in two horizontal directions, it would go left first
+    // If the hit was found in two verticle directions, it would go up first
 }
 
 // If it's a near miss or a hit we are gonna try to find the next one
