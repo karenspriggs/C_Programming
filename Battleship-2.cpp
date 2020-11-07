@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 int boardsize = 0;
+int hits = 0;
 
 void set_size(){
     int x;
@@ -371,23 +372,155 @@ void print_board(int * board){
 
 // Battleship 2 starts here
 
-// If it's a near miss or a hit we are gonna try to find the next one
-void find_next(int * board, int x, int y, int result, int * hit_board){
-    int hitcount;
-    bool is_vertical = generate_alignment();
-    bool go_positive = generate_alignment();
+// Seeing where to check next depending on where a hit (or near hit) was found
 
-    // Keeping track of the amount of hits we have for this one ship
-    if (result == 1){
-        hitcount = 1;
+// Top Left corner
+void tl_corner_check(int * board, int * hit_board){
+    int down_result = (check(board, 0, 1));
+    int right_result = (check(board, 1, 0));
+    bool down_hit = (down_result == 1);
+    bool right_hit = (right_result == 1);
+
+    // Changes the adjacent spaces on the hit board
+    hit_board[1] = right_result;
+    hit_board[boardsize] = down_result;
+
+    // If the hit is found, continue in the direction of the hit
+    // Since this is only run if a hit is found in the corner
+    // There must be a hit in one of the adjacent spaces
+    if(down_hit){
+        find_next(board, 0, 1, hit_board);
     } else {
-        hitcount = 0;
+        find_next(board, 1, 0, hit_board);
     }
+}
 
-    if (is_vertical){
+// Top Right corner
+void tr_corner_check(int * board, int * hit_board){
+    int down_result = (check(board, (boardsize - 1), 1));
+    int left_result = (check(board, (boardsize - 2), 0));
+    bool down_hit = (down_result == 1);
+    bool right_hit = (left_result == 1);
 
+    hit_board[(boardsize - 2)] = left_result;
+    hit_board[(2 *(boardsize - 1))] = down_result;
+
+    if(down_hit){
+        find_next(board, (boardsize - 1), 1, hit_board);
     } else {
+        find_next(board, (boardsize - 2), 0, hit_board);
+    }
+}
 
+// Bottom Left Corner
+void bl_corner_check(int * board, int * hit_board){
+    int up_result = (check(board, 0, (boardsize - 2)));
+    int right_result = (check(board, 1, 0));
+    bool up_hit = (up_result == 1);
+    bool right_hit = (right_result == 1);
+
+    hit_board[((boardsize - 1) * boardsize) + 1] = right_result;
+    hit_board[(boardsize - 2) * boardsize] = up_result;
+
+    if(up_hit){
+        find_next(board, 0, (boardsize - 2), hit_board);
+    } else {
+        find_next(board, 1, (boardsize - 1), hit_board);
+    }
+}
+
+// Bottom Right Corner
+void br_corner_check(int * board, int * hit_board){
+    int up_result = (check(board, (boardsize - 1), (boardsize - 2)));
+    int left_result = (check(board, (boardsize - 2), (boardsize - 1)));
+    bool up_hit = (up_result == 1);
+    bool left_hit = (left_result == 1);
+
+    hit_board[(boardsize * boardsize) - 2] = left_result;
+    hit_board[((boardsize - 1) * boardsize) - 1] = up_result;
+
+    if(up_hit){
+        find_next(board, (boardsize - 1), (boardsize - 2), hit_board);
+    } else {
+        find_next(board, (boardsize - 2), (boardsize - 1), hit_board);
+    }
+}
+
+// Topmost row
+void topmost_check(int * board, int pos, int * hit_board){
+
+}
+
+// Bottommost row
+void bottommost_check(int * board, int pos, int * hit_board){
+
+}
+
+// Far left column
+void leftmost_check(int * board, int pos, int * hit_board){
+
+}
+
+// Far right column
+void rightmost_check(int * board, int pos, int * hit_board){
+
+}
+
+// None of the above (default)
+void normal_check(int * board, int pos, int * hit_board){
+
+}
+
+// If it's a near miss or a hit we are gonna try to find the next one
+void find_next(int * board, int x, int y, int * hit_board){
+    int pos = (y * boardsize) + x;
+    int place = error_codes(pos);
+
+    switch(place){
+        case 8 :
+        // If it is on the bottom row of the board
+        bottommost_check(board, pos, hit_board);
+        break;
+
+        case 7 :
+        // If it is on the top row
+        topmost_check(board, pos, hit_board);
+        break;
+
+        case 6 :
+        // If it is on the far left column
+        leftmost_check(board, pos, hit_board);
+        break;
+
+        case 5 :
+        // If it is on the far right column
+        rightmost_check(board, pos, hit_board);
+
+        break;
+
+        case 4 :
+        // If it is in the bottom left corner
+        bl_corner_check(board, hit_board);
+        break;
+
+        case 3 :
+        // If it is in the bottom right corner
+        br_corner_check(board, hit_board);
+        break;
+
+        case 2:
+        // If it is in the top right corner
+        tr_corner_check(board, hit_board);
+        break;
+
+        case 1:
+        // If it is in the top left corner
+        tl_corner_check(board, hit_board);
+        break;
+
+        default :
+        normal_check(board, pos, hit_board);
+        break;
     }
 }
 
@@ -411,7 +544,7 @@ void make_move(int * board, int * hit_board){
 
         // If the result was a hit then try to find another
         if (result != 3){
-            find_next(board, place_x, place_y, result, hit_board);
+            find_next(board, place_x, place_y, hit_board);
         }
     }
 }
@@ -438,7 +571,7 @@ int check(int * board, int x, int y){
 
 // Checks to see if the position is right up against an edge or corner
 // This affects how the next position to be checked will be determined
-int error_codes(int * board, int pos, int value){
+int error_codes(int pos){
    // Will say if anything violates this
 
     // Returns 1 if it is in the top left corner
@@ -522,9 +655,9 @@ void update_board(int * board, int x, int y, int value){
 
 // Starts the algorithm
 void start(int * board, int * hitboard){
-    bool done = false;
-
-    while(!done){
+    // There will be 17 spaces that make up the ships on the board
+    // So once it has hit 17 times, it means that it has found everything
+    while(hits < 17){
         make_move(board, hitboard);
     }
 
