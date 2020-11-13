@@ -1,0 +1,5 @@
+namespace B {
+    class Card{
+        
+    };
+}
