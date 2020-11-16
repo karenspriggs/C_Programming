@@ -12,5 +12,5 @@ class Card{
         int value;
         Card(int x) {
             value = x;
-    }
+        }
 };
