@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include <ctime>
-#include "Player.h"
+#include "Deck.h"
 
 using namespace std;
 using namespace B;
 
-class Player{
-    int score;
+class Deck{
+    
     public:
-    void make_turn();
+    int get_card();
 };
