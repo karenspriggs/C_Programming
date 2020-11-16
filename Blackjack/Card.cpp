@@ -8,7 +8,9 @@ using namespace std;
 using namespace B;
 
 class Card{
-    int value;
     public:
-    void set_value(int);
+        int value;
+        Card(int x) {
+            value = x;
+    }
 };
