@@ -17,13 +17,13 @@ class Player{
         Player() {
 
         }
-        void update_total(Card card);
+        void update_total(int value);
         int make_choice();
 };
 
 // Update the player's total score
-void Player::update_total(Card card){
-    current_total += card.value;
+void Player::update_total(int value){
+    current_total += value;
 }
 
 // AI Decides if it should hit or stand
