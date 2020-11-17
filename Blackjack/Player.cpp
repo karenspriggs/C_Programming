@@ -32,10 +32,14 @@ int Player::make_choice() {
     int decision;
 
     // Hits if the total is less than 17
-    if (current_total < 17){
-        decision = 1;
+    if (current_total == 21){
+        decision = 3;
     } else {
-        decision = 2;
+        if (current_total < 17){
+            decision = 2;
+        } else {
+            decision = 1;
+        }
     }
 
     return decision;
