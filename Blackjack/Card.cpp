@@ -4,7 +4,6 @@
 #include <ctime>
 #include "Card.h"
 
-using namespace std;
 using namespace B;
 
 class Card{

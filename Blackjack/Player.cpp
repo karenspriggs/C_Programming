@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include <ctime>
-#include "Player.h"
+//#include "Player.h"
 #include "Deck.h"
 
-using namespace std;
 using namespace B;
 
 class Player{

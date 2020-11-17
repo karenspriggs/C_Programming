@@ -2,17 +2,20 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include <ctime>
-#include "Deck.h"
+//#include "Deck.h"
 #include "Card.h"
 
-using namespace std;
 using namespace B;
 
 class Deck{
-    List<Card> cards;
+    Card cards[64];
     public:
         int get_card();
         Deck() {
 
         }
 };
+
+int Deck::get_card(){
+
+}

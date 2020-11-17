@@ -8,8 +8,8 @@
 
 using namespace B;
 
-Player dealer = new Player();
-Player player = new Player();
+Player* dealer = new Player();
+Player* player = new Player();
 
 void play() {
 
