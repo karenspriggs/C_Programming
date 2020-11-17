@@ -10,7 +10,7 @@
 
 using namespace B;
 
-int round = 0;
+int match = 0;
 int who_won = 0;
 
 Player dealer;
@@ -77,19 +77,21 @@ void play() {
         player.score++;
     }
 
-    round++;
+    match++;
     deck.add_cards();
 }
 
 void game(){
-    while (round < 100){
+    while (match < 100){
         play();
     }
 }
 
 // Print how many times each person won
 void print_scores(){
-    //cout << "The player won " << player.score << " times" << endl;
+    printf("%d", player.score);
+    printf("%s", "\n");
+    printf("%d", dealer.score);
 }
 
 int main() {

@@ -34,23 +34,25 @@ int Player::make_choice() {
     int decider = rand() % 1;
     int decision;
 
-    // Hits if the total is less than 17
-    // More than 17, and its random
     if (current_total == 21){
+        decision = 4;
+    } else {
+        if (current_total > 21){
         // player busts
         decision = 3;
     } else {
-        if (current_total > 17){
-            if (decider == 1){
-                // player stands
-                decision = 1;
+            if (current_total > 17){
+                if (decider == 1){
+                    // player stands
+                    decision = 1;
+                } else {
+                    // player hits
+                    decision = 2;
+                }
             } else {
                 // player hits
                 decision = 2;
             }
-        } else {
-            // player hits
-            decision = 2;
         }
     }
 
@@ -60,17 +62,21 @@ int Player::make_choice() {
 int Player::make_choice_dealer() {
     int decision;
 
-    // Hits if the total is less than 17
     if (current_total == 21){
-        // dealer busts
-        decision = 3;
+        decision = 4;
     } else {
-        if (current_total < 17){
-            // dealer hits
-            decision = 2;
+        // Hits if the total is less than 17
+        if (current_total > 21){
+            // dealer busts
+            decision = 3;
         } else {
-            // dealer stands
-            decision = 1;
+            if (current_total < 17){
+                // dealer hits
+                decision = 2;
+            } else {
+                // dealer stands
+                decision = 1;
+            }
         }
     }
 
