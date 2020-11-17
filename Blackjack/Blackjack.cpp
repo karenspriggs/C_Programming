@@ -18,10 +18,10 @@ Player player;
 Deck deck;
 
 void deal(){
-    int player_first;
-    int player_second;
-    int dealer_first;
-    int dealer_second;
+    int player_first = deck.get_card();
+    int player_second = deck.get_card();
+    int dealer_first = deck.get_card();
+    int dealer_second = deck.get_card();
 
     player.update_total(player_first);
     player.update_total(player_second);
@@ -30,21 +30,33 @@ void deal(){
 }
 
 void player_moves(){
-    int who_won;
     int player_choice = player.make_choice();
+    int next_card = deck.get_card();
+
     if (player_choice == 3){
         who_won = 1;
+    } else {
+        if (player_choice == 2){
+            player.update_total(next_card);
+            player_moves();
+        } else {
+            dealer_moves();
+        }
     }
 }
 
 void dealer_moves(){
     int dealer_choice = player.make_choice_dealer();
+    int next_card = deck.get_card();
 
     if (dealer_choice == 3){
-        who_won = 1;
+        who_won = 2;
     } else {
         if (dealer_choice == 2){
-
+            dealer.update_total(next_card);
+            dealer_moves();
+        } else {
+            player_moves();
         }
     }
 }
@@ -58,8 +70,8 @@ void play() {
 
     player_moves();
     dealer_moves();
-    
-    if (who_won == 1){
+
+    if (who_won == 2){
         dealer.score++;
     } else {
         player.score++;
