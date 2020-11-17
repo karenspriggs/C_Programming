@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+
 #include "Player.h"
 #include "Card.h"
 #include "Deck.h"
@@ -30,7 +32,7 @@ void game(){
 
 // Print how many times each person won
 void print_scores(){
-    
+    //cout << "The player won " << player.score << " times" << endl;
 }
 
 int main() {
