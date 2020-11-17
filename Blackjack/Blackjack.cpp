@@ -11,9 +11,11 @@
 using namespace B;
 
 int round = 0;
+int who_won = 0;
+
 Player dealer;
 Player player;
-Deck* deck = new Deck();
+Deck deck;
 
 void deal(){
     int player_first;
@@ -27,16 +29,44 @@ void deal(){
     dealer.update_total(dealer_second);
 }
 
+void player_moves(){
+    int who_won;
+    int player_choice = player.make_choice();
+    if (player_choice == 3){
+        who_won = 1;
+    }
+}
+
+void dealer_moves(){
+    int dealer_choice = player.make_choice_dealer();
+
+    if (dealer_choice == 3){
+        who_won = 1;
+    } else {
+        if (dealer_choice == 2){
+
+        }
+    }
+}
+
 void play() {
     // This is what is run 100 times
     // First you deal the first 2 cards to the players, player goes first then dealer
     // They choose to either stand or hit depending on what they have
     // Whoever wins gets a point
     deal();
-    int player_choice = player.make_choice();
-    int dealer_choice = player.make_choice();
+
+    player_moves();
+    dealer_moves();
+    
+    if (who_won == 1){
+        dealer.score++;
+    } else {
+        player.score++;
+    }
 
     round++;
+    deck.add_cards();
 }
 
 void game(){

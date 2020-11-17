@@ -7,5 +7,6 @@ namespace B {
             }
             void update_total(int value);
             int make_choice();
+            int make_choice_dealer();
     };
 }
