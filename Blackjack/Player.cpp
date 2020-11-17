@@ -10,8 +10,8 @@ using namespace B;
 class Player{
     // List of cards
     int current_total = 0;
-    int score;
     public:
+        int score = 0;
         Player() {
 
         }
