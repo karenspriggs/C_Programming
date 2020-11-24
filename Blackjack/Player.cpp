@@ -31,7 +31,6 @@ void Player::update_total(int value){
 // AI Decides if it should hit or stand
 // 1 is hit, 2 is stand
 int Player::make_choice() {
-    int decider = rand() % 1;
     int decision;
 
     if (current_total == 21){
@@ -42,13 +41,7 @@ int Player::make_choice() {
         decision = 3;
     } else {
             if (current_total > 17){
-                if (decider == 1){
-                    // player stands
-                    decision = 1;
-                } else {
-                    // player hits
-                    decision = 2;
-                }
+                decision = 2;
             } else {
                 // player hits
                 decision = 2;

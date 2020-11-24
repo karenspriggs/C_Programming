@@ -39,8 +39,6 @@ void player_moves(){
         if (player_choice == 2){
             player.update_total(next_card);
             player_moves();
-        } else {
-            dealer_moves();
         }
     }
 }
@@ -55,8 +53,6 @@ void dealer_moves(){
         if (dealer_choice == 2){
             dealer.update_total(next_card);
             dealer_moves();
-        } else {
-            player_moves();
         }
     }
 }
@@ -68,8 +64,8 @@ void play() {
     // Whoever wins gets a point
     deal();
 
-    player_moves();
     dealer_moves();
+    player_moves();
 
     if (who_won == 2){
         dealer.score++;
