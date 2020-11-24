@@ -3,12 +3,13 @@
 #include <cstdlib>
 #include <ctime>
 
-//#include "Player.h"
+#include "Player.h"
 #include "Deck.h"
-#include "Card.h"
+//#include "Card.h"
 
 using namespace B;
 
+/**
 class Player{
     // List of cards
     int current_total = 0;
@@ -22,6 +23,7 @@ class Player{
         int make_choice();
         int make_choice_dealer();
 };
+**/
 
 // Update the player's total score
 void Player::update_total(int value){

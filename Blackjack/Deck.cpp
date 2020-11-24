@@ -3,11 +3,12 @@
 #include <cstdlib>
 #include <ctime>
 
-//#include "Deck.h"
-#include "Card.h"
+#include "Deck.h"
+//#include "Card.h"
 
 using namespace B;
 
+/**
 class Deck{
     int* cards;
     public:
@@ -18,15 +19,19 @@ class Deck{
 
         }
 };
+**/
 
 // Deck Class Constructor
 Deck::Deck(){
+    allocate();
     add_cards();
 }
+
 
 void Deck::allocate(){
     int memory_size = 64 * sizeof(int);
     cards = (int *) malloc(memory_size);
+    printf("%s", "allocated");
 }
 
 // Adding the cards to the deck

@@ -2,6 +2,7 @@ namespace B {
     class Player{
         public:
             int score = 0;
+            int current_total = 0;
             Player() {
 
             }
