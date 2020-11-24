@@ -54,23 +54,17 @@ int Player::make_choice() {
 }
 
 int Player::make_choice_dealer() {
-    int decision;
+    int decision = 0;
 
-    if (current_total == 21){
-        decision = 4;
-    } else {
-        // Hits if the total is less than 17
-        if (current_total > 21){
-            // dealer busts
-            decision = 3;
-        } else {
-            if (current_total < 17){
-                // dealer hits
-                decision = 2;
-            } else {
-                // dealer stands
-                decision = 1;
-            }
+    if (current_total == 21) {
+        return 4;
+    }
+    else {
+        if (current_total > 21) {
+            return 3;
+        }
+        else {
+            return 1;
         }
     }
 
