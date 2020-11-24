@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 #include "Deck.h"
-//#include "Card.h"
 
 using namespace B;
 
@@ -22,49 +22,38 @@ class Deck{
 **/
 
 // Deck Class Constructor
-Deck::Deck(){
+Deck::Deck() {
     allocate();
     add_cards();
 }
 
 
-void Deck::allocate(){
-    int memory_size = 64 * sizeof(int);
-    cards = (int *) malloc(memory_size);
-    printf("%s", "allocated");
+void Deck::allocate() {
+    int memory_size = 13 * sizeof(int);
+    cards = (int*)malloc(memory_size);
 }
 
 // Adding the cards to the deck
-void Deck::add_cards(){
-    for (int i = 1; i < 5; i++){
-        for (int j = 1; j < 14; j++){
-            int index = (i*j) - 1;
-
-            if (j = 0){
-                cards[index] = 1;
-            } else {
-                if (j > 10){
-                    cards[index] = 10;
-                } else {
-                    cards[index] = j;
-                }
-            }
-        }
-    }
+void Deck::add_cards() {
+    cards[0] = 11;
+    cards[1] = 2;
+    cards[2] = 3;
+    cards[3] = 4;
+    cards[4] = 5;
+    cards[5] = 6;
+    cards[6] = 7;
+    cards[7] = 8;
+    cards[8] = 9;
+    cards[9] = 10;
+    cards[10] = 10;
+    cards[11] = 10;
+    cards[12] = 10;
 }
 
 // Drawing cards from the deck
-int Deck::get_card(){
-    // Change to the length of the array instead of 63
-    int index = rand() % 63;
+int Deck::get_card() {
+    int index = rand() % 13;
     int drawncard = cards[index];
-
-    if(drawncard == 0){
-        get_card();
-    } else {
-        cards[index] = 0;
-        return drawncard;
-    }
 
     return drawncard;
 }
