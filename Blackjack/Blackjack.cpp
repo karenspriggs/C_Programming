@@ -58,7 +58,14 @@ void dealer_moves() {
             who_won = 1;
         }
         else {
-            player_moves();
+            if (dealer_choice == 2) {
+                int next_card = deck->get_card();
+                dealer->update_total(next_card);
+                dealer_moves();
+            }
+            else {
+                player_moves();
+            }
         }
     }
 }

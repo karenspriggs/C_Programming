@@ -56,6 +56,7 @@ int Player::make_choice() {
 int Player::make_choice_dealer() {
     int decision = 0;
 
+    /*
     if (current_total == 21) {
         return 4;
     }
@@ -65,6 +66,24 @@ int Player::make_choice_dealer() {
         }
         else {
             return 1;
+        }
+    }
+    */
+
+    if (current_total == 21) {
+        return 4;
+    }
+    else {
+        if (current_total > 21) {
+            return 3;
+        }
+        else {
+            if (current_total < 17) {
+                return 2;
+            }
+            else {
+                return 1;
+            }
         }
     }
 
