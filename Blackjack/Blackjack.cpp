@@ -48,7 +48,7 @@ void player_moves() {
 }
 
 void dealer_moves() {
-    int dealer_choice = player->make_choice_dealer();
+    int dealer_choice = dealer->make_choice_dealer();
 
     if (dealer_choice == 4) {
         who_won = 2;
@@ -111,7 +111,6 @@ void print_scores() {
 
 int main() {
     srand(time(0));
-    //play();
     game();
     print_scores();
 }
