@@ -9,11 +9,17 @@
 
 using namespace C;
 
+int cups = 0;
 Hopper* hopper = new Hopper();
-Reservoir* reservoirr = new Reservoir();
+Reservoir* reservoir = new Reservoir();
+
+void take_input(){
+
+}
 
 void make(){
-
+    reservoir->fill(cups);
+    reservoir->boil();
 }
 
 int main(){
