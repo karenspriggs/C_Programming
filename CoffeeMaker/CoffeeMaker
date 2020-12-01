@@ -14,11 +14,13 @@ Hopper* hopper = new Hopper();
 Reservoir* reservoir = new Reservoir();
 
 void take_input(){
+    std::cout << "Please enter the amount of cups of coffee you want to make" << std::endl;
 
+    
 }
 
 void make_coffee(){
-    std::cout << "\nMaking coffee: " << cups << " cups" << std::endl;
+    std::cout << "Making coffee: " << cups << " cups" << std::endl;
 }
 
 void finish(){

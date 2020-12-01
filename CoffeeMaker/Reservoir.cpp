@@ -10,14 +10,15 @@ using namespace std;
 int temperature = 0;
 
 void fill(int cups){
-    std::cout << "\nFilling Water: " << cups << " cups" << std::endl;
+    std::cout << "Filling Water: " << cups << " cups" << std::endl;
 }
 
 void boil(){
-    std::cout << "\nBoiling water" << std::endl;
-    std::cout << "\n" << 0 << std::endl;
+    std::cout << "Boiling water" << std::endl;
+    std::cout <<  0 << std::endl;
+
     for (int i = 1; i < 17; i++){
         temperature += 15;
-        std::cout << "\n" << temperature << std::endl;
+        std::cout  << temperature << std::endl;
     }
 }

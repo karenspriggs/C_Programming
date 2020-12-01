@@ -11,11 +11,11 @@ int beans = 0;
 
 void fill(int cups){
     beans = cups * 50;
-    std::cout << "\nLoading " << beans << " beans" << std::endl;
+    std::cout << "Loading " << beans << " beans" << std::endl;
 }
 
 void grind(){
-    std::cout << "\nGrinding" << std::endl;
+    std::cout << "Grinding" << std::endl;
 
     while (beans !=0){
         beans -= 25;
