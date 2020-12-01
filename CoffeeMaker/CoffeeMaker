@@ -4,6 +4,18 @@
 #include <ctime>
 #include <iostream>
 
+#include "Hopper.h"
+#include "Reservoir.h"
+
+using namespace C;
+
+Hopper* hopper = new Hopper();
+Reservoir* reservoirr = new Reservoir();
+
+void make(){
+
+}
+
 int main(){
 
 }
