@@ -1,19 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstdlib>
-#include <ctime>
+#include <iostream>
 
 #include "Hopper.h"
 
 using namespace C;
+using namespace std;
+int beans = 0;
 
 void fill(int cups){
-    int beans = cups * 50;
-    printf("%s", "Loading ");
-    printf("%d", beans);
-    printf("%s", " beans");
+    beans = cups * 50;
+    std::cout << "\nLoading " << beans << " beans" << std::endl;
 }
 
 void grind(){
-    printf("%s", "\nGrinding");
+    std::cout << "\nGrinding" << std::endl;
+
+    while (beans !=0){
+        beans -= 25;
+    }
 }
