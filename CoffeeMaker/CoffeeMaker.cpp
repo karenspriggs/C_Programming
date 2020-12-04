@@ -15,6 +15,7 @@ Reservoir* reservoir = new Reservoir();
 int take_input(){
     int cups = 0;
     std::cout << "Please enter the amount of cups of coffee you want to make" << std::endl;
+    // Make sure that you have a try/catch for exceptions here
     std::cin >> cups;
 
     if (cups > 4){
