@@ -38,7 +38,7 @@ void make(){
 
     hopper->fill(cups);
     hopper->grind();
-    reservoir->fill(cups);
+    reservoir->pour(cups);
     reservoir->boil();
     make_coffee(cups);
     finish(cups);

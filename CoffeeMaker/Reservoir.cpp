@@ -9,16 +9,16 @@ using namespace C;
 using namespace std;
 int temperature = 0;
 
-void fill(int cups){
+void Reservoir::pour(int cups) {
     std::cout << "Filling Water: " << cups << " cups" << std::endl;
 }
 
-void boil(){
+void Reservoir::boil() {
     std::cout << "Boiling water" << std::endl;
-    std::cout <<  0 << std::endl;
+    std::cout << 0 << std::endl;
 
-    for (int i = 1; i < 17; i++){
+    for (int i = 1; i < 13; i++) {
         temperature += 15;
-        std::cout  << temperature << std::endl;
+        std::cout << temperature << std::endl;
     }
 }

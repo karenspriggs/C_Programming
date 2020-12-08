@@ -1,8 +1,8 @@
 namespace C {
-    class Reservoir{
+    class Reservoir {
         int temperature = 0;
     public:
-        void fill(int cups);
+        void pour(int cups);
         void boil();
     };
 }
