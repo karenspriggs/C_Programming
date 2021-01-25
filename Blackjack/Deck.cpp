@@ -35,6 +35,8 @@ void Deck::allocate() {
 
 // Adding the cards to the deck
 void Deck::add_cards() {
+    // There are only really 13 "values" possible when not counting the suits, so an array of 13
+    // makes sense for me for this
     cards[0] = 11;
     cards[1] = 2;
     cards[2] = 3;
