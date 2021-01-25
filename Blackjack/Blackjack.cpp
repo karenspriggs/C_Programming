@@ -59,7 +59,9 @@ void dealer_moves() {
         }
         else {
             if (dealer_choice == 2) {
+                printf("%s", "\n dealer hits\n");
                 int next_card = deck->get_card();
+                printf("%d", next_card);
                 dealer->update_total(next_card);
                 dealer_moves();
             }
