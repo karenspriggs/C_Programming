@@ -1,5 +1,5 @@
 # C++ Programming 1
-This repository holds my assignments for C++ programming 1, which include the following projects:
+This repository holds my assignments for C++ programming 1, which includes the following projects:
 
 ## Elevator
 Unlike the others in the repo this assignment was coded in C instead of C++, and helped me to get acquainted with the ways in which those languages are different from C#. Core concepts covered in this project are memory allocation and linked list.
